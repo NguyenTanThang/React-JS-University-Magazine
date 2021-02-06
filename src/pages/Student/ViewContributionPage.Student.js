@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {ContributionTable} from "../../components/Contribution";
 import {getAllContributions} from "../../requests";
-import { message } from "antd";
+import { message, Space } from "antd";
+import {Link} from "react-router-dom";
 
 class ViewContributionPage extends Component {
 
@@ -33,6 +34,10 @@ class ViewContributionPage extends Component {
 
         return (
             <div>
+                <h2>View Contributions</h2>
+                <Space>
+                    <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
+                </Space>
                 <ContributionTable contributions={actualContributions}/>
             </div>
         )

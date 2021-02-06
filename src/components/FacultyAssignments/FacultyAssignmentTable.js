@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
+import {populateActionButtons} from "../../utils";
 
 import TableView from "../Partial/TableView";
 
@@ -67,6 +68,18 @@ class FacultyAssignmentTable extends Component {
                   )
               }
             },
+            {
+                title: 'Actions',
+                dataIndex: 'actions',
+                key: 'actions',
+                render: (_none, record) => {
+                    return (
+                        <>
+                          {populateActionButtons("faculty-assignemnts", record)}
+                        </>
+                    )
+                }
+              },
         ];
 
         const filterredColumns = ["user.email", "user.username", "faculty.name"];

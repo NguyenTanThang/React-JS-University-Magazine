@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {FacultyTable} from "../../components/Faculty";
 import {getAllFaculties} from "../../requests";
-import { message } from "antd";
+import { message, Space } from "antd";
+import {Link} from "react-router-dom";
 
 class ViewFacultyPage extends Component {
 
@@ -33,6 +34,10 @@ class ViewFacultyPage extends Component {
 
         return (
             <div>
+                <h2>View Faculty</h2>
+                <Space>
+                    <Link to="/faculties/add" className="btn btn-primary">Add Faculty</Link>
+                </Space>
                 <FacultyTable faculties={actualFaculties}/>
             </div>
         )

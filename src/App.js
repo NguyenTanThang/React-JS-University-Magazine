@@ -2,14 +2,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import "antd/dist/antd.css";
 import './App.css';
 
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import {
   Navbar
 } from "./components/Partial";
 import {
-  ViewContributionPageStudent,
-  AddContributionPageStudent
+  ViewContributionPageStudent
 } from "./pages/Student";
 import ChatPage from "./pages/ChatPage";
 import {
@@ -38,7 +37,6 @@ function App() {
           <Route path="/chat" exact component={ChatPage}/>
           <div className="container">
               <Route path="/" exact component={ViewUserPageAdmin}/>
-              <Route path="/contributions/add" component={AddContributionPageStudent}/>
               <Route path="/terms" exact component={ViewTermPageAdmin}/>
               <Route path="/terms/add" component={AddTermPageAdmin}/>
               <Route path="/terms/edit/:termID" component={EditTermPageAdmin}/>

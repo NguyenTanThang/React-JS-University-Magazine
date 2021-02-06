@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {FacultyAssignmentTable} from "../../components/FacultyAssignments";
 import {getAllFacultyAssignments} from "../../requests";
-import { message } from "antd";
+import { message, Space } from "antd";
+import {Link} from "react-router-dom";
 
 class ViewFacultyAssignmentPage extends Component {
 
@@ -33,6 +34,10 @@ class ViewFacultyAssignmentPage extends Component {
 
         return (
             <div>
+                <h2>View Faculty Assignment</h2>
+                <Space>
+                    <Link to="/faculty-assignments/add" className="btn btn-primary">Add Faculty Assignment</Link>
+                </Space>
                 <FacultyAssignmentTable facultyAssignments={actualfacultyAssignments}/>
             </div>
         )

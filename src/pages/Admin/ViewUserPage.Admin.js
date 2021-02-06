@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {UserTable} from "../../components/User";
 import {getAllUsers} from "../../requests";
-import { message } from "antd";
+import { message, Space } from "antd";
+import {Link} from "react-router-dom";
 
 class ViewUserPage extends Component {
 
@@ -33,6 +34,10 @@ class ViewUserPage extends Component {
 
         return (
             <div>
+                <h2>View Users</h2>
+                <Space>
+                    <Link to="/users/add" className="btn btn-primary">Add User</Link>
+                </Space>
                 <UserTable users={actualUsers}/>
             </div>
         )

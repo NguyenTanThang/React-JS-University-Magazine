@@ -1,4 +1,24 @@
+import { Space } from 'antd';
+import {Link} from "react-router-dom";
+
 export * from "./dateParser";
+
+export const populateActionButtons = (routeName, record) => {
+    const recordID = record._id;
+    return (
+        <Space>
+            <Link to={`${routeName}/details/${recordID}`} className="btn btn-primary">
+                <i className="fas fa-eye" aria-hidden="true"></i>
+            </Link>
+            <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
+                <i className="fas fa-pen"></i>
+            </Link>
+            <button className="btn btn-danger">
+                <i className="fas fa-trash" aria-hidden="true"></i>
+            </button>
+        </Space>
+    )
+}
 
 export const exchangeURLToFileDirectory = (url) => {
     var uri = url;

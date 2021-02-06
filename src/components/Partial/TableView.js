@@ -222,9 +222,13 @@ class TableView extends React.Component {
       onChange: this.onSelectChange,
     };
  
-    return <Table 
-    //rowSelection={rowSelection} 
-    columns={masterColumns} dataSource={data} loading={loading}/>;
+    return (
+    <div className="table-container">
+      <Table 
+      //rowSelection={rowSelection} 
+      columns={masterColumns} dataSource={data} loading={loading}/>
+    </div>
+    )
   }
 }
 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
+import {populateActionButtons} from "../../utils";
 
 import TableView from "../Partial/TableView";
 
 class FacultyTable extends Component {
+
     render() {
         const {faculties} = this.props;
 
@@ -46,6 +48,18 @@ class FacultyTable extends Component {
                   )
               }
             },
+            {
+                title: 'Actions',
+                dataIndex: 'actions',
+                key: 'actions',
+                render: (_none, record) => {
+                    return (
+                        <>
+                          {populateActionButtons("faculties", record)}
+                        </>
+                    )
+                }
+              },
         ];
 
         const filterredColumns = ["name"];

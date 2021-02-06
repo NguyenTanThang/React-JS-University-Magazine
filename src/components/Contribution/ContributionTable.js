@@ -1,32 +1,12 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
-import { Space } from 'antd';
-import {Link} from "react-router-dom";
+import {populateActionButtons} from "../../utils";
 
 import TableView from "../Partial/TableView";
 
 class ContributionTable extends Component {
 
-    populateActionButtons = (record) => {
-        const routeName = "contributions"
-        const recordID = record._id;
-        return (
-            <Space>
-                <Link to={`${routeName}/details/${recordID}`} className="btn btn-primary">
-                    <i className="fas fa-eye" aria-hidden="true"></i>
-                </Link>
-                <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
-                    <i className="fas fa-pen"></i>
-                </Link>
-                <button className="btn btn-danger">
-                    <i className="fas fa-trash" aria-hidden="true"></i>
-                </button>
-            </Space>
-        )
-    }
-
     render() {
-        const {populateActionButtons} = this;
         const {contributions} = this.props;
 
         const columns = [
@@ -106,7 +86,7 @@ class ContributionTable extends Component {
                 render: (_none, record) => {
                     return (
                         <>
-                          {populateActionButtons(record)}
+                          {populateActionButtons("contributions", record)}
                         </>
                     )
                 }

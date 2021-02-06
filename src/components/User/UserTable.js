@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
+import {populateActionButtons} from "../../utils";
 
 import TableView from "../Partial/TableView";
 
@@ -57,6 +58,18 @@ class UserTable extends Component {
                   )
               }
             },
+            {
+                title: 'Actions',
+                dataIndex: 'actions',
+                key: 'actions',
+                render: (_none, record) => {
+                    return (
+                        <>
+                          {populateActionButtons("users", record)}
+                        </>
+                    )
+                }
+              },
         ];
 
         const filterredColumns = ["email", "username", "role.role"];

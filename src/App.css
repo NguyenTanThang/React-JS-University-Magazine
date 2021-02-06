@@ -31,7 +31,7 @@ ol {
 main {
     padding-top: 126.5px;
     padding-bottom: 20px;
-    background-color: #ededed;
+    background-color: #fff;
     min-height: 100vh;
 }
 
@@ -223,4 +223,9 @@ main h2 {
 .react-chat-row {
     height: 100vh !important;
     padding: 0 !important;
+}
+
+/*Table*/
+.table-container {
+    margin-top: 20px;
 }

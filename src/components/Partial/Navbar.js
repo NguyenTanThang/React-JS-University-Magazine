@@ -87,7 +87,7 @@ export default class Navbar extends Component {
                         </div>
                     </div>
                 </div>
-                <Sidebar active={activeSidebar}/>
+                <Sidebar active={activeSidebar} toggleSidebarActive={toggleSidebarActive}/>
             </>
         )
     }
