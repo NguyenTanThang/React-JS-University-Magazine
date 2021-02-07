@@ -10,7 +10,6 @@ class EditUser extends Component {
 
     state = {
         username: "",
-        email: "",
         role: "",
         userRoles: []
     }
@@ -18,7 +17,7 @@ class EditUser extends Component {
     async componentDidMount() {
         try {
             const {userItem} = this.props;
-            const {username, email} = userItem;
+            const {username} = userItem;
             const data = await getAllUserRoles();
             this.setState({
                 userRoles: data.data,
@@ -26,7 +25,6 @@ class EditUser extends Component {
                     return roleItem._id === userItem.role._id;
                 })[0]._id,
                 username,
-                email
             })
         } catch (error) {
             console.log(error);
@@ -53,8 +51,8 @@ class EditUser extends Component {
         try {
             e.preventDefault();
             const {userItem} = this.props;
-            const {username, email, role} = this.state;
-            const editUserData = await editUser(userItem._id, {username, email, role});
+            const {username, role} = this.state;
+            const editUserData = await editUser(userItem._id, {username, role});
 
             if (editUserData.success) {
                 return message.success(editUserData.message);
@@ -68,7 +66,7 @@ class EditUser extends Component {
 
     render() {
         const {handleSubmit, handleChange, renderUserRoleOptions} = this;
-        const {username, email, role} = this.state;
+        const {username, role} = this.state;
 
         return (
             <div className="add-contribution-container form-container">
@@ -79,12 +77,6 @@ class EditUser extends Component {
                                 Username
                             </Label>
                             <Input className="input-control" id="username" name="username" required value={username} onChange={handleChange} placeholder="Username"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="email">
-                                Email
-                            </Label>
-                            <Input className="input-control" id="email" name="email" required value={email} onChange={handleChange} placeholder="Email"/>
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="role">

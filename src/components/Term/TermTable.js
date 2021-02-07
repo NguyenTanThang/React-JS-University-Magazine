@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
 import {populateActionButtons} from "../../utils";
+import {Space} from "antd";
 
 import TableView from "../Partial/TableView";
+import DeleteTerm from "./DeleteTerm";
 
 class TermTable extends Component {
     render() {
@@ -67,9 +69,10 @@ class TermTable extends Component {
                 key: 'actions',
                 render: (_none, record) => {
                     return (
-                        <>
-                          {populateActionButtons("terms", record)}
-                        </>
+                        <Space>
+                        {populateActionButtons("terms", record)}
+                          <DeleteTerm recordID={record._id}/>
+                        </Space>
                     )
                 }
               },

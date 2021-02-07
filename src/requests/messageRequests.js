@@ -1,5 +1,6 @@
 import axios from "axios";
 import {PROXY_URL} from "../config/config";
+import {authHeader} from "../_helpers";
 
 export const getAllMessagesByRoomID = async (roomID) => {
     try {
@@ -17,6 +18,10 @@ export const addMessage = async (roomID, authorID, content) => {
     try {
         const res = await axios.post(`${PROXY_URL}/messages/add`, {
             room: roomID, author: authorID, content
+        }, {
+            headers: {
+                ...authHeader()
+            }
         });
         const data = res.data;
         console.log(data);

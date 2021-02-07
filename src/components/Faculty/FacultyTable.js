@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
 import {populateActionButtons} from "../../utils";
+import {Space} from "antd";
 
 import TableView from "../Partial/TableView";
+import DeleteFaculty from "./DeleteFaculty";
 
 class FacultyTable extends Component {
 
@@ -54,9 +56,10 @@ class FacultyTable extends Component {
                 key: 'actions',
                 render: (_none, record) => {
                     return (
-                        <>
+                        <Space>
                           {populateActionButtons("faculties", record)}
-                        </>
+                          <DeleteFaculty recordID={record._id}/>
+                        </Space>
                     )
                 }
               },

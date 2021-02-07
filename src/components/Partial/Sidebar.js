@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import shortid from "shortid";
 
 export default class Sidebar extends Component {
 
@@ -44,7 +45,7 @@ export default class Sidebar extends Component {
         return listOfLinks.map(linkItem => {
             const {link, icon, text} = linkItem;
             return (
-                <div className="side-bar__item" onClick={toggleSidebarActive}>
+                <div key={shortid()} className="side-bar__item" onClick={toggleSidebarActive}>
                         <Link to={link}>
                             <div className="side-bar-item__icon">
                                 <span className="material-icons">

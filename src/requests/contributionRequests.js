@@ -4,6 +4,7 @@ import {
     uploadDocumentFirebase,
     uploadImageFirebase
 } from "./";
+import {authHeader} from "../_helpers";
 
 export const getAllContributions = async () => {
     try {
@@ -22,6 +23,10 @@ export const createContribution = async (newContribution) => {
         const res = await axios.post(`${PROXY_URL}/contributions/add`, {
             ...newContribution,
             contributor: "601269a3772e8b310084bb18"
+        }, {
+            headers: {
+                ...authHeader()
+            }
         });
         const data = res.data;
 
@@ -65,6 +70,26 @@ export const editContribution = async (contributionID, updatedContribution) => {
         
         const res = await axios.put(`${PROXY_URL}/contributions/edit/${contributionID}`, {
             ...updatedContribution
+        }, {
+            headers: {
+                ...authHeader()
+            }
+        });
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const deleteContribution = async (contributionID) => {
+    try {
+        const res = await axios.delete(`${PROXY_URL}/contributions/delete/${contributionID}`, {
+            headers: {
+                ...authHeader()
+            }
         });
         const data = res.data;
 

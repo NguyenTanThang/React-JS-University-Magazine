@@ -1,5 +1,6 @@
 import axios from "axios";
 import {PROXY_URL} from "../config/config";
+import {authHeader} from "../_helpers";
 
 export const getAllFacultyAssignments = async () => {
     try {
@@ -27,7 +28,11 @@ export const getFacultyAssignmentByID = async (facultyAssignmentID) => {
 
 export const createFacultyAssignment = async (newFacultyAssignment) => {
     try {
-        const res = await axios.post(`${PROXY_URL}/faculty-assignments/add`, newFacultyAssignment);
+        const res = await axios.post(`${PROXY_URL}/faculty-assignments/add`, newFacultyAssignment, {
+            headers: {
+                ...authHeader()
+            }
+        });
         const data = res.data;
 
         return data;
@@ -39,7 +44,27 @@ export const createFacultyAssignment = async (newFacultyAssignment) => {
 
 export const editFacultyAssignment = async (facAssID, updatedfacAss) => {
     try {
-        const res = await axios.put(`${PROXY_URL}/faculty-assignments/edit/${facAssID}`, updatedfacAss);
+        const res = await axios.put(`${PROXY_URL}/faculty-assignments/edit/${facAssID}`, updatedfacAss, {
+            headers: {
+                ...authHeader()
+            }
+        });
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const deleteFacultyAssignment = async (facAssID) => {
+    try {
+        const res = await axios.delete(`${PROXY_URL}/faculty-assignments/delete/${facAssID}`, {
+            headers: {
+                ...authHeader()
+            }
+        });
         const data = res.data;
 
         return data;

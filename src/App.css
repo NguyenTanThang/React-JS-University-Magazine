@@ -14,7 +14,20 @@ ol {
 }
 
 /*Button*/
-.btn-custom-primary {}
+.btn-custom-primary {
+    background-color: #4d5da3;
+    border: 3px solid #4d5da3;
+    color: #FFF;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px 20px;
+    border-radius: 20px;
+}
+
+.btn-custom-primary:hover {
+    background-color: #FFF;
+    color: #4d5da3;
+}
 
 /*General*/
 .form-group>label {
@@ -24,7 +37,15 @@ ol {
 
 .form-container {
     background-color: #ffffff;
-    padding: 30px;
+    padding-top: 20px;
+}
+
+form .form-group:last-child {
+    text-align: right;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 30px;
 }
 
 /*Main*/
@@ -93,8 +114,12 @@ main h2 {
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
-    background-color: #ededed;
+    background-color: #f1f0f0;
     padding-bottom: 0;
+}
+
+.user-actions-container:hover {
+    background-color: #dbdada;
 }
 
 .user-actions-container p {
@@ -126,6 +151,7 @@ main h2 {
     display: block;
     padding: 10px;
     width: 100%;
+    color: #000;
 }
 
 .user-actions-dropdown ul li a:hover {

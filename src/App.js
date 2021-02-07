@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import './App.css';
 
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import {PrivateRoute} from "./components/Partial";
 
 import {
   Navbar
@@ -11,6 +12,7 @@ import {
   ViewContributionPageStudent
 } from "./pages/Student";
 import ChatPage from "./pages/ChatPage";
+import LoginPage from "./pages/LoginPage";
 import {
   ViewUserPageAdmin,
   ViewTermPageAdmin,
@@ -36,21 +38,22 @@ function App() {
         <main>
           <Route path="/chat" exact component={ChatPage}/>
           <div className="container">
-              <Route path="/" exact component={ViewUserPageAdmin}/>
-              <Route path="/terms" exact component={ViewTermPageAdmin}/>
-              <Route path="/terms/add" component={AddTermPageAdmin}/>
-              <Route path="/terms/edit/:termID" component={EditTermPageAdmin}/>
-              <Route path="/faculties" exact component={ViewFacultyPageAdmin}/>
-              <Route path="/faculties/add" component={AddFacultyPageAdmin}/>
-              <Route path="/faculties/edit/:facultyID" component={EditFacultyPageAdmin}/>
-              <Route path="/faculty-assignments" exact component={ViewFacultyAssignmentPageAdmin}/>
-              <Route path="/faculty-assignments/add" component={AddFacultyAssignmentPageAdmin}/>
-              <Route path="/faculty-assignments/edit/:facultyAssignmentID" component={EditFacultyAssignmentAdmin}/>
-              <Route path="/contributions" exact component={ViewContributionPageStudent}/>
-              <Route path="/contributions/add" component={AddContributionAdmin}/>
-              <Route path="/contributions/edit/:contributionID" component={EditContributionAdmin}/>
-              <Route path="/users/add" component={AddUserPageAdmin}/>
-              <Route path="/users/edit/:userID" component={EditUserPageAdmin}/>
+              <PrivateRoute path="/" exact component={ViewUserPageAdmin}/>
+              <Route path="/login" exact component={LoginPage}/>
+              <PrivateRoute path="/terms" exact component={ViewTermPageAdmin}/>
+              <PrivateRoute path="/terms/add" component={AddTermPageAdmin}/>
+              <PrivateRoute path="/terms/edit/:termID" component={EditTermPageAdmin}/>
+              <PrivateRoute path="/faculties" exact component={ViewFacultyPageAdmin}/>
+              <PrivateRoute path="/faculties/add" component={AddFacultyPageAdmin}/>
+              <PrivateRoute path="/faculties/edit/:facultyID" component={EditFacultyPageAdmin}/>
+              <PrivateRoute path="/faculty-assignments" exact component={ViewFacultyAssignmentPageAdmin}/>
+              <PrivateRoute path="/faculty-assignments/add" component={AddFacultyAssignmentPageAdmin}/>
+              <PrivateRoute path="/faculty-assignments/edit/:facultyAssignmentID" component={EditFacultyAssignmentAdmin}/>
+              <PrivateRoute path="/contributions" exact component={ViewContributionPageStudent}/>
+              <PrivateRoute path="/contributions/add" component={AddContributionAdmin}/>
+              <PrivateRoute path="/contributions/edit/:contributionID" component={EditContributionAdmin}/>
+              <PrivateRoute path="/users/add" component={AddUserPageAdmin}/>
+              <PrivateRoute path="/users/edit/:userID" component={EditUserPageAdmin}/>
           </div>
         </main>
       </Router>

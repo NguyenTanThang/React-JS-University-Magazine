@@ -1,5 +1,6 @@
 import axios from "axios";
 import {PROXY_URL} from "../config/config";
+import {authHeader} from "../_helpers";
 
 export const getAllTerms = async () => {
     try {
@@ -15,7 +16,11 @@ export const getAllTerms = async () => {
 
 export const createTerm = async (newTerm) => {
     try {
-        const res = await axios.post(`${PROXY_URL}/terms/add`, newTerm);
+        const res = await axios.post(`${PROXY_URL}/terms/add`, newTerm, {
+            headers: {
+                ...authHeader()
+            }
+        });
         const data = res.data;
 
         return data;
@@ -39,7 +44,27 @@ export const getTermByID = async (termID) => {
 
 export const editTerm = async (termID, updatedTerm) => {
     try {
-        const res = await axios.put(`${PROXY_URL}/terms/edit/${termID}`, updatedTerm);
+        const res = await axios.put(`${PROXY_URL}/terms/edit/${termID}`, updatedTerm, {
+            headers: {
+                ...authHeader()
+            }
+        });
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const deleteTerm = async (termID) => {
+    try {
+        const res = await axios.delete(`${PROXY_URL}/terms/delete/${termID}`, {
+            headers: {
+                ...authHeader()
+            }
+        });
         const data = res.data;
 
         return data;
