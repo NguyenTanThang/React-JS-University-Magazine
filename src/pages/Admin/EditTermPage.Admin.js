@@ -3,6 +3,7 @@ import {EditTerm} from "../../components/Term";
 import {
     getTermByID
 } from "../../requests";
+import {Navbar} from "../../components/Partial";
 
 class EditTermPage extends Component {
 
@@ -28,8 +29,13 @@ class EditTermPage extends Component {
 
         return (
             <div>
-                <h2>Edit Term</h2>
-                <EditTerm termItem={termItem}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>Edit Term</h2>
+                        <EditTerm termItem={termItem}/>
+                    </div>
+                </main>
             </div>
         )
     }

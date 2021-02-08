@@ -3,6 +3,7 @@ import {UserTable} from "../../components/User";
 import {getAllUsers} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
+import {Navbar} from "../../components/Partial";
 
 class ViewUserPage extends Component {
 
@@ -34,11 +35,16 @@ class ViewUserPage extends Component {
 
         return (
             <div>
-                <h2>View Users</h2>
-                <Space>
-                    <Link to="/users/add" className="btn btn-primary">Add User</Link>
-                </Space>
-                <UserTable users={actualUsers}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>View Users</h2>
+                        <Space>
+                            <Link to="/users/add" className="btn btn-primary">Add User</Link>
+                        </Space>
+                        <UserTable users={actualUsers}/>
+                    </div>
+                </main>
             </div>
         )
     }

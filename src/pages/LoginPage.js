@@ -38,7 +38,7 @@ export default class LoginPage extends Component {
                             <Input id="email" name="email" placeholder="Email" value={email} onChange={handleChange}/>
                         </FormGroup>
                         <FormGroup>
-                            <Input id="password" name="password" placeholder="Password" value={password} onChange={handleChange}/>
+                            <Input type="password" id="password" name="password" placeholder="Password" value={password} onChange={handleChange}/>
                         </FormGroup>
                         <FormGroup>
                             <button type="submit" className="btn btn-custom-primary">Login</button>

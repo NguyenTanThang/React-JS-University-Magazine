@@ -255,3 +255,38 @@ main h2 {
 .table-container {
     margin-top: 20px;
 }
+
+/*Login*/
+.login-page {
+    background-image: url(https://i.imgur.com/ozdmkGH.png);
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-container {
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255,255,255,0.9);
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.login-form-container form {
+    max-width: 500px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form-container__logo {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}

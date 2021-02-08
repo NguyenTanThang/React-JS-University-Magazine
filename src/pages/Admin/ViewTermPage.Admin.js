@@ -3,6 +3,7 @@ import {TermTable} from "../../components/Term";
 import {getAllTerms} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
+import {Navbar} from "../../components/Partial";
 
 class ViewTermPage extends Component {
 
@@ -34,11 +35,16 @@ class ViewTermPage extends Component {
 
         return (
             <div>
-                <h2>View Terms</h2>
-                <Space>
-                    <Link to="/terms/add" className="btn btn-primary">Add Term</Link>
-                </Space>
-                <TermTable terms={actualTerms}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>View Terms</h2>
+                        <Space>
+                            <Link to="/terms/add" className="btn btn-primary">Add Term</Link>
+                        </Space>
+                        <TermTable terms={actualTerms}/>
+                    </div>
+                </main>
             </div>
         )
     }

@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import {AddContribution} from "../../components/Contribution";
+import {Navbar} from "../../components/Partial";
 
 class AddContributionPage extends Component {
 
     render() {
         return (
             <div>
-                <h2>Upload Contribution</h2>
-                <AddContribution/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>Upload Contribution</h2>
+                        <AddContribution/>
+                    </div>
+                </main>
             </div>
         )
     }

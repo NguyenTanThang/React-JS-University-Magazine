@@ -3,6 +3,7 @@ import {EditFacultyAssignment} from "../../components/FacultyAssignments";
 import {
     getFacultyAssignmentByID
 } from "../../requests";
+import {Navbar} from "../../components/Partial";
 
 class EditFacultyAssignmentPage extends Component {
 
@@ -28,8 +29,13 @@ class EditFacultyAssignmentPage extends Component {
 
         return (
             <div>
-                <h2>Edit Faculty Assignment</h2>
-                <EditFacultyAssignment facultyAssignmentItem={facultyAssignmentItem}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>Edit Faculty Assignment</h2>
+                        <EditFacultyAssignment facultyAssignmentItem={facultyAssignmentItem}/>
+                    </div>
+                </main>
             </div>
         )
     }

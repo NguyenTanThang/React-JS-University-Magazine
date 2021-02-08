@@ -8,3 +8,4 @@ export {
     Sidebar
 };
 export * from "./PrivateRoute";
+export * from "./FreeRoute";

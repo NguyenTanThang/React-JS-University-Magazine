@@ -3,6 +3,7 @@ import {EditUser} from "../../components/User";
 import {
     getUserByID
 } from "../../requests";
+import {Navbar} from "../../components/Partial";
 
 class EditUserPage extends Component {
 
@@ -28,8 +29,13 @@ class EditUserPage extends Component {
 
         return (
             <div>
-                <h2>Edit User</h2>
-                <EditUser userItem={userItem}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>Edit User</h2>
+                        <EditUser userItem={userItem}/>
+                    </div>
+                </main>
             </div>
         )
     }

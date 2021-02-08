@@ -3,6 +3,7 @@ import {FacultyTable} from "../../components/Faculty";
 import {getAllFaculties} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
+import {Navbar} from "../../components/Partial";
 
 class ViewFacultyPage extends Component {
 
@@ -34,11 +35,16 @@ class ViewFacultyPage extends Component {
 
         return (
             <div>
-                <h2>View Faculty</h2>
-                <Space>
-                    <Link to="/faculties/add" className="btn btn-primary">Add Faculty</Link>
-                </Space>
-                <FacultyTable faculties={actualFaculties}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>View Faculty</h2>
+                        <Space>
+                            <Link to="/faculties/add" className="btn btn-primary">Add Faculty</Link>
+                        </Space>
+                        <FacultyTable faculties={actualFaculties}/>
+                    </div>
+                </main>
             </div>
         )
     }

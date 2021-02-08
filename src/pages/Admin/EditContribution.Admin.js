@@ -3,6 +3,7 @@ import {EditContribution} from "../../components/Contribution";
 import {
     getContributionByID
 } from "../../requests";
+import {Navbar} from "../../components/Partial";
 
 class EditContributionPage extends Component {
 
@@ -28,8 +29,13 @@ class EditContributionPage extends Component {
 
         return (
             <div>
-                <h2>Edit Contribution</h2>
-                <EditContribution contributionItem={contributionItem}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>Edit Contribution</h2>
+                        <EditContribution contributionItem={contributionItem}/>
+                    </div>
+                </main>
             </div>
         )
     }

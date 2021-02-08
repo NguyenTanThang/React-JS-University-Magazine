@@ -3,6 +3,7 @@ import {EditFaculty} from "../../components/Faculty";
 import {
     getFacultyByID
 } from "../../requests";
+import {Navbar} from "../../components/Partial";
 
 class EditFacultyPage extends Component {
 
@@ -28,8 +29,13 @@ class EditFacultyPage extends Component {
 
         return (
             <div>
-                <h2>Edit Faculty</h2>
-                <EditFaculty facultyItem={facultyItem}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>Edit Faculty</h2>
+                        <EditFaculty facultyItem={facultyItem}/>
+                    </div>
+                </main>
             </div>
         )
     }

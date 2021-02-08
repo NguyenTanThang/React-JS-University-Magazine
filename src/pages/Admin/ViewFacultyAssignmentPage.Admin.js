@@ -3,6 +3,7 @@ import {FacultyAssignmentTable} from "../../components/FacultyAssignments";
 import {getAllFacultyAssignments} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
+import {Navbar} from "../../components/Partial";
 
 class ViewFacultyAssignmentPage extends Component {
 
@@ -34,11 +35,16 @@ class ViewFacultyAssignmentPage extends Component {
 
         return (
             <div>
-                <h2>View Faculty Assignment</h2>
-                <Space>
-                    <Link to="/faculty-assignments/add" className="btn btn-primary">Add Faculty Assignment</Link>
-                </Space>
-                <FacultyAssignmentTable facultyAssignments={actualfacultyAssignments}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>View Faculty Assignment</h2>
+                        <Space>
+                            <Link to="/faculty-assignments/add" className="btn btn-primary">Add Faculty Assignment</Link>
+                        </Space>
+                        <FacultyAssignmentTable facultyAssignments={actualfacultyAssignments}/>
+                    </div>
+                </main>
             </div>
         )
     }
