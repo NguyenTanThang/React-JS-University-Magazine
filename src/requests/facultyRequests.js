@@ -1,6 +1,7 @@
 import axios from "axios";
 import {PROXY_URL} from "../config/config";
 import {authHeader} from "../_helpers";
+import {message} from "antd";
 
 export const getAllFaculties = async () => {
     try {
@@ -16,6 +17,8 @@ export const getAllFaculties = async () => {
 
 export const createFaculty = async (newFac) => {
     try {
+        message.loading("Creating...", 0);
+
         const res = await axios.post(`${PROXY_URL}/faculties/add`, newFac, {
             headers: {
                 ...authHeader()
@@ -23,8 +26,11 @@ export const createFaculty = async (newFac) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -44,6 +50,8 @@ export const getFacultyByID = async (facultyID) => {
 
 export const editFaculty = async (facID, updatedFac) => {
     try {
+        message.loading("Updating...", 0);
+
         const res = await axios.put(`${PROXY_URL}/faculties/edit/${facID}`, updatedFac, {
             headers: {
                 ...authHeader()
@@ -51,8 +59,11 @@ export const editFaculty = async (facID, updatedFac) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -60,6 +71,8 @@ export const editFaculty = async (facID, updatedFac) => {
 
 export const deleteFaculty = async (facID) => {
     try {
+        message.loading("Deleting...", 0);
+
         const res = await axios.delete(`${PROXY_URL}/faculties/delete/${facID}`, {
             headers: {
                 ...authHeader()
@@ -67,8 +80,11 @@ export const deleteFaculty = async (facID) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }

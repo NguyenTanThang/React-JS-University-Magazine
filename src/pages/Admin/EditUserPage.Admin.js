@@ -4,6 +4,7 @@ import {
     getUserByID
 } from "../../requests";
 import {Navbar} from "../../components/Partial";
+import {PageHeader} from "antd";
 
 class EditUserPage extends Component {
 
@@ -32,7 +33,16 @@ class EditUserPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>Edit User</h2>
+                        <div className="page-header">
+                            <PageHeader
+                                className="site-page-header"
+                                onBack={() => {
+                                    this.props.history.push("/terms")
+                                }}
+                                title={"Edit User"}
+                                subTitle={``}
+                            />
+                        </div>
                         <EditUser userItem={userItem}/>
                     </div>
                 </main>

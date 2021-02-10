@@ -12,6 +12,7 @@ import AddFacultyAssignmentPageAdmin from "./AddFacultyAssignmentPage.Admin";
 import EditFacultyAssignmentAdmin from "./EditFacultyAssignment.Admin";
 import AddContributionAdmin from "./AddContribution.Admin";
 import EditContributionAdmin from "./EditContribution.Admin";
+import ViewContributionPage from "./ViewContributionPage.Admin";
 
 export {
     ViewUserPageAdmin,
@@ -27,5 +28,6 @@ export {
     EditTermPageAdmin,
     EditFacultyAssignmentAdmin,
     AddContributionAdmin,
-    EditContributionAdmin
+    EditContributionAdmin,
+    ViewContributionPage
 };

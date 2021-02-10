@@ -5,6 +5,7 @@ import {
     uploadImageFirebase
 } from "./";
 import {authHeader} from "../_helpers";
+import {message} from "antd";
 
 export const getAllContributions = async () => {
     try {
@@ -20,9 +21,10 @@ export const getAllContributions = async () => {
 
 export const createContribution = async (newContribution) => {
     try {
+        message.loading("Creating...", 0);
+
         const res = await axios.post(`${PROXY_URL}/contributions/add`, {
-            ...newContribution,
-            contributor: "601269a3772e8b310084bb18"
+            ...newContribution
         }, {
             headers: {
                 ...authHeader()
@@ -30,8 +32,11 @@ export const createContribution = async (newContribution) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -51,6 +56,8 @@ export const getContributionByID = async (contributionID) => {
 
 export const editContribution = async (contributionID, updatedContribution) => {
     try {
+        message.loading("Updating...", 0);
+
         const {docFile, imageFile} = updatedContribution;
 
         if (docFile) {
@@ -77,8 +84,11 @@ export const editContribution = async (contributionID, updatedContribution) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -86,6 +96,8 @@ export const editContribution = async (contributionID, updatedContribution) => {
 
 export const deleteContribution = async (contributionID) => {
     try {
+        message.loading("Deleting...", 0);
+
         const res = await axios.delete(`${PROXY_URL}/contributions/delete/${contributionID}`, {
             headers: {
                 ...authHeader()
@@ -93,8 +105,11 @@ export const deleteContribution = async (contributionID) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }

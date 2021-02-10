@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
 import {populateActionButtons} from "../../utils";
 import {Space} from "antd";
+import {
+    authenticationService
+} from "../../_services";
+import {
+    Role
+} from "../../_helpers";
 
 import TableView from "../Partial/TableView";
 import DeleteTerm from "./DeleteTerm";
@@ -9,6 +15,22 @@ import DeleteTerm from "./DeleteTerm";
 class TermTable extends Component {
     render() {
         const {terms} = this.props;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
+
+        const actionCol = currentRole === Role.Admin ? {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (_none, record) => {
+                return (
+                    <Space>
+                    {populateActionButtons("terms", record)}
+                      <DeleteTerm recordID={record._id}/>
+                    </Space>
+                )
+            }
+        } : {};
 
         const columns = [
             {
@@ -63,19 +85,7 @@ class TermTable extends Component {
                   )
               }
             },
-            {
-                title: 'Actions',
-                dataIndex: 'actions',
-                key: 'actions',
-                render: (_none, record) => {
-                    return (
-                        <Space>
-                        {populateActionButtons("terms", record)}
-                          <DeleteTerm recordID={record._id}/>
-                        </Space>
-                    )
-                }
-              },
+            actionCol
         ];
 
         const filterredColumns = ["name"];

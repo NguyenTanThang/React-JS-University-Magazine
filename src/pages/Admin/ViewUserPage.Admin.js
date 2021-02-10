@@ -4,6 +4,8 @@ import {getAllUsers} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
 import {Navbar} from "../../components/Partial";
+import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
 
 class ViewUserPage extends Component {
 
@@ -25,8 +27,17 @@ class ViewUserPage extends Component {
 
     render() {
         let {users} = this.state;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
+        let actualUsers = users;
 
-        let actualUsers = users.map(user => {
+        actualUsers = actualUsers.filter(actualUser => {
+            if (currentRole === Role.Coordinator) {
+                return actualUser.role.role === Role.Student;
+            }
+            return actualUser;
+        })
+        actualUsers = actualUsers.map(user => {
             return {
                 ...user,
                 key: user._id

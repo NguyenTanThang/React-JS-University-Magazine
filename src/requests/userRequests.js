@@ -1,6 +1,7 @@
 import axios from "axios";
 import {PROXY_URL} from "../config/config";
 import {authHeader} from "../_helpers";
+import {message} from "antd";
 
 export const getAllUsers = async () => {
     try {
@@ -36,6 +37,8 @@ export const getUserByID = async (userID) => {
 
 export const createUser = async (newUser) => {
     try {
+        message.loading("Creating...", 0);
+
         const res = await axios.post(`${PROXY_URL}/users/add`, newUser, {
             headers: {
                 ...authHeader()
@@ -43,8 +46,12 @@ export const createUser = async (newUser) => {
         });
         const data = res.data;
 
+        message.destroy();
+
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -52,15 +59,20 @@ export const createUser = async (newUser) => {
 
 export const editUser = async (userID, updatedUser) => {
     try {
+        message.loading("Updating...", 0);
+
         const res = await axios.put(`${PROXY_URL}/users/edit/${userID}`, updatedUser, {
             headers: {
                 ...authHeader()
             }
         });
         const data = res.data;
+        message.destroy();
 
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {AddFacultyAssignment} from "../../components/FacultyAssignments";
 import {Navbar} from "../../components/Partial";
+import {PageHeader} from "antd";
 
 class AddFacultyAssignmentPage extends Component {
 
@@ -10,7 +11,16 @@ class AddFacultyAssignmentPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>Create Faculty Assignment</h2>
+                        <div className="page-header">
+                            <PageHeader
+                                className="site-page-header"
+                                onBack={() => {
+                                    this.props.history.push("/faculty-assignments")
+                                }}
+                                title={"Add Faculty Assignment"}
+                                subTitle={``}
+                            />
+                        </div>
                         <AddFacultyAssignment/>
                     </div>
                 </main>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {AddTerm} from "../../components/Term";
 import {Navbar} from "../../components/Partial";
+import {PageHeader} from "antd";
 
 class AddTermPage extends Component {
 
@@ -10,7 +11,16 @@ class AddTermPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>Create Term</h2>
+                        <div className="page-header">
+                            <PageHeader
+                                className="site-page-header"
+                                onBack={() => {
+                                    this.props.history.push("/terms")
+                                }}
+                                title={"Add Term"}
+                                subTitle={``}
+                            />
+                        </div>
                         <AddTerm/>
                     </div>
                 </main>

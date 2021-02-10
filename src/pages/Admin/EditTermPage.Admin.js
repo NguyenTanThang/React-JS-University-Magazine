@@ -4,6 +4,7 @@ import {
     getTermByID
 } from "../../requests";
 import {Navbar} from "../../components/Partial";
+import {PageHeader} from "antd";
 
 class EditTermPage extends Component {
 
@@ -32,7 +33,16 @@ class EditTermPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>Edit Term</h2>
+                        <div className="page-header">
+                            <PageHeader
+                                className="site-page-header"
+                                onBack={() => {
+                                    this.props.history.push("/terms")
+                                }}
+                                title={"Edit Term"}
+                                subTitle={``}
+                            />
+                        </div>
                         <EditTerm termItem={termItem}/>
                     </div>
                 </main>

@@ -1,20 +1,81 @@
-import { Space } from 'antd';
 import {Link} from "react-router-dom";
+import {
+    adminLinks,
+    guestLinks,
+    managerLinks,
+    studentLinks,
+    coordinatorLinks,
+    Role
+} from "../_helpers";
+import {
+    authenticationService
+} from "../_services"
 
 export * from "./dateParser";
 
+export const returnLinksList = (role) => {
+    let ans = [];
+
+    switch (role) {
+        case Role.Admin:
+            ans = adminLinks;
+            break;
+        case Role.Guest:
+            ans = guestLinks;
+            break;
+        case Role.Manager:
+            ans = managerLinks;
+            break;
+        case Role.Student:
+            ans = studentLinks;
+            break;
+        case Role.Coordinator:
+            ans = coordinatorLinks;
+            break;
+        default:
+            break;
+    }
+
+    return ans;
+}
+
+export function get_url_extension( url ) {
+    return url.split(/[#?]/)[0].split('.').pop().trim();
+}
+
 export const populateActionButtons = (routeName, record, canView = false) => {
     const recordID = record._id;
+    const currentUser = authenticationService.currentUserValue;
+    const currentRole = currentUser.role.role;
+
+    if (currentRole === Role.Admin) {
+        return (
+            <>
+                {canView ? (
+                    <Link to={`${routeName}/details/${recordID}`} className="btn btn-primary">
+                        <span className="material-icons">
+                            visibility
+                        </span>
+                    </Link>
+                ): (<></>)}
+                <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
+                    <span className="material-icons">
+                        mode_edit
+                    </span>
+                </Link>
+            </>
+        )
+    }
+
     return (
         <>
             {canView ? (
                 <Link to={`${routeName}/details/${recordID}`} className="btn btn-primary">
-                    <i className="fas fa-eye" aria-hidden="true"></i>
+                    <span className="material-icons">
+                        visibility
+                    </span>
                 </Link>
             ): (<></>)}
-            <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
-                <i className="fas fa-pen"></i>
-            </Link>
         </>
     )
 }

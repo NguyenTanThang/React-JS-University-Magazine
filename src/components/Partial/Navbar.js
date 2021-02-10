@@ -38,7 +38,14 @@ export default class Navbar extends Component {
                             <div className="navbar__main-nav">
                                 <div className="navbar__main-nav__left">
                                     <div className="sidebar-toggle" onClick={toggleSidebarActive}>
-                                        <i className="fas fa-bars"></i>
+                                        {
+                                            activeSidebar ? <span className="material-icons">
+                                            menu_open
+                                        </span> : 
+                                            <span className="material-icons">
+                                                menu
+                                            </span>
+                                        }
                                     </div>
                                     <div className="navbar-brand">
                                         <Link to="/">
@@ -64,7 +71,7 @@ export default class Navbar extends Component {
                                                 person
                                             </span>
                                         </div>
-                                        <p>Username</p>
+                                        <p>{loggedIn.username}</p>
                                         <div className="user-action__expand-icon">
                                             <span className="material-icons">
                                                 keyboard_arrow_down

@@ -5,6 +5,7 @@ import {
 } from "../../requests";
 import {message} from "antd";
 import {parseDateMomentForInput} from "../../utils/";
+import {withRouter} from "react-router-dom";
 
 class AddContribution extends Component {
 
@@ -37,6 +38,7 @@ class AddContribution extends Component {
             const {name, closureDate, finalClosureDate} = this.state;
             const editTermData = await editTerm(termItem._id, {name, closureDate, finalClosureDate});
             if (editTermData.success) {
+                this.props.history.push("/terms");
                 return message.success(editTermData.message);
             } 
 
@@ -66,7 +68,7 @@ class AddContribution extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="finalClosureDate">Final Closure Date</Label>
-                            <Input className="input-control"  type="date" id="finalClosureDate" name="finalClosureDate" required onChange={handleChange} value={finalClosureDate}/>
+                            <Input min={closureDate} className="input-control"  type="date" id="finalClosureDate" name="finalClosureDate" required onChange={handleChange} value={finalClosureDate}/>
                         </FormGroup>
                         <FormGroup>
                             <button type="submit" className="btn btn-custom-primary">Submit</button>
@@ -78,4 +80,4 @@ class AddContribution extends Component {
     }
 }
 
-export default AddContribution;
+export default withRouter(AddContribution);

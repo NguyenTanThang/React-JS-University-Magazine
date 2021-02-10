@@ -4,9 +4,15 @@ import {
     ChatSidebar
 } from "../components/Chat";
 import {
+    Navbar
+} from "../components/Partial";
+import {
     getAllMessageRoomsByUserID,
     getAllMessagesByRoomID
 } from "../requests";
+import {
+    authenticationService
+} from "../_services";
 
 class ChatPage extends Component {
 
@@ -41,7 +47,7 @@ class ChatPage extends Component {
     async componentDidMount() {
         let messageRooms = [];
         let messagesList = [];
-        const messageRoomData = await getAllMessageRoomsByUserID("600fdd5ee23ff52318455076");
+        const messageRoomData = await getAllMessageRoomsByUserID(authenticationService.currentUserValue._id);
         messageRooms = messageRoomData.data;
         for (let i = 0; i < messageRooms.length; i++) {
             const messageRoom = messageRooms[i];
@@ -76,12 +82,17 @@ class ChatPage extends Component {
         console.log(messageRooms)
 
         return (
-            <div className="chat-page">
-                <ChatSidebar messageRooms={messageRooms} changeCurrentIndex={changeCurrentIndex} currentIndex={currentIndex}/>
-                <div className="chat__room">
-                    {renderChatRooms()}
-                </div>
-            </div>
+            <>
+                <Navbar/>
+                <main>
+                    <div className="chat-page">
+                        <ChatSidebar messageRooms={messageRooms} changeCurrentIndex={changeCurrentIndex} currentIndex={currentIndex}/>
+                        <div className="chat__room">
+                            {renderChatRooms()}
+                        </div>
+                    </div>
+                </main>
+            </>
         )
     }
 }

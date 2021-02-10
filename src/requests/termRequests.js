@@ -1,6 +1,7 @@
 import axios from "axios";
 import {PROXY_URL} from "../config/config";
 import {authHeader} from "../_helpers";
+import {message} from "antd";
 
 export const getAllTerms = async () => {
     try {
@@ -16,6 +17,8 @@ export const getAllTerms = async () => {
 
 export const createTerm = async (newTerm) => {
     try {
+        message.loading("Creating...", 0);
+
         const res = await axios.post(`${PROXY_URL}/terms/add`, newTerm, {
             headers: {
                 ...authHeader()
@@ -23,8 +26,11 @@ export const createTerm = async (newTerm) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -44,6 +50,8 @@ export const getTermByID = async (termID) => {
 
 export const editTerm = async (termID, updatedTerm) => {
     try {
+        message.loading("Updating...", 0);
+
         const res = await axios.put(`${PROXY_URL}/terms/edit/${termID}`, updatedTerm, {
             headers: {
                 ...authHeader()
@@ -51,8 +59,11 @@ export const editTerm = async (termID, updatedTerm) => {
         });
         const data = res.data;
 
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }
@@ -60,15 +71,19 @@ export const editTerm = async (termID, updatedTerm) => {
 
 export const deleteTerm = async (termID) => {
     try {
+        message.loading("Deleting...", 0);
+
         const res = await axios.delete(`${PROXY_URL}/terms/delete/${termID}`, {
             headers: {
                 ...authHeader()
             }
         });
         const data = res.data;
-
+        message.destroy();
         return data;
     } catch (error) {
+        message.destroy();
+        message.error(error.message);
         console.log(error);
         return null;
     }

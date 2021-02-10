@@ -12,7 +12,8 @@ import {
     getFileExtension,
     acceptDocExt,
     acceptImageExt
-} from "../../utils"
+} from "../../utils";
+import {authenticationService} from "../../_services"
 
 class AddContribution extends Component {
 
@@ -26,8 +27,9 @@ class AddContribution extends Component {
     }
 
     async componentDidMount() {
+        const currentFacultyAssignment = authenticationService.currentUserValue.facultyAssignment;
         const termData = await getAllTerms();
-        const facData = await getFacultyByID("60121ee8d067ef220c6c5f17");
+        const facData = await getFacultyByID(currentFacultyAssignment ? currentFacultyAssignment.faculty : "");
         this.setState({
             term: termData.data[0]._id,
             terms: termData.data,
@@ -79,6 +81,7 @@ class AddContribution extends Component {
     handleSubmit = async (e) => {
         try {
             e.preventDefault();
+            const currentUser = authenticationService.currentUserValue;
             const {
                 term,
                 docFile,
@@ -95,7 +98,8 @@ class AddContribution extends Component {
                 docFileURL,
                 imageFileURL,
                 faculty: faculty._id,
-                title
+                title,
+                contributor: currentUser._id
             });
             if (createContributionData.success) {
                 return message.success(createContributionData.message);

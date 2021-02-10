@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
 import {populateActionButtons} from "../../utils";
 import {Space} from "antd";
+import {
+    authenticationService
+} from "../../_services";
+import {
+    Role
+} from "../../_helpers";
 
 import TableView from "../Partial/TableView";
 import DeleteFaculty from "./DeleteFaculty";
@@ -10,6 +16,23 @@ class FacultyTable extends Component {
 
     render() {
         const {faculties} = this.props;
+
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
+
+        const actionCol = currentRole === Role.Admin ? {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (_none, record) => {
+                return (
+                    <Space>
+                      {populateActionButtons("faculties", record)}
+                      <DeleteFaculty recordID={record._id}/>
+                    </Space>
+                )
+            }
+          } : {};
 
         const columns = [
             {
@@ -50,19 +73,7 @@ class FacultyTable extends Component {
                   )
               }
             },
-            {
-                title: 'Actions',
-                dataIndex: 'actions',
-                key: 'actions',
-                render: (_none, record) => {
-                    return (
-                        <Space>
-                          {populateActionButtons("faculties", record)}
-                          <DeleteFaculty recordID={record._id}/>
-                        </Space>
-                    )
-                }
-              },
+            actionCol
         ];
 
         const filterredColumns = ["name"];

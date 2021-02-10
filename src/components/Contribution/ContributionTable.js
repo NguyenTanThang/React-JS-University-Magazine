@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import {parseDateMoment} from "../../utils";
-import {populateActionButtons} from "../../utils";
+import {parseDateMoment, populateActionButtons} from "../../utils";
 import {Space} from "antd";
+import {
+    authenticationService
+} from "../../_services";
+import {
+    Role
+} from "../../_helpers";
 
 import TableView from "../Partial/TableView";
 import DeleteContribution from "./DeleteContribution";
@@ -10,6 +15,8 @@ class ContributionTable extends Component {
 
     render() {
         const {contributions} = this.props;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
 
         const columns = [
             {
@@ -86,10 +93,17 @@ class ContributionTable extends Component {
                 dataIndex: 'actions',
                 key: 'actions',
                 render: (_none, record) => {
+                    if (currentRole === Role.Admin) {
+                        return (
+                            <Space>
+                                {populateActionButtons("contributions", record, true)}
+                              <DeleteContribution recordID={record._id}/>
+                            </Space>
+                        )
+                    }
                     return (
                         <Space>
                             {populateActionButtons("contributions", record, true)}
-                          <DeleteContribution recordID={record._id}/>
                         </Space>
                     )
                 }

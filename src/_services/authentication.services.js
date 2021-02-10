@@ -27,7 +27,7 @@ function login(email, password) {
             sessionStorage.setItem('currentUser', JSON.stringify(user));
             currentUserSubject.next(user);
 
-            return user;
+            return userData;
         });
 }
 

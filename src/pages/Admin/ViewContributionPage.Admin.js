@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {EditContribution} from "../../components/Contribution";
+import {DetailsContribution} from "../../components/Contribution";
 import {
     getContributionByID
 } from "../../requests";
 import {Navbar} from "../../components/Partial";
-import {PageHeader} from "antd";
 
-class EditContributionPage extends Component {
+class ViewContributionPage extends Component {
 
     state = {
         contributionItem: ""
@@ -33,17 +32,7 @@ class EditContributionPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <div className="page-header">
-                            <PageHeader
-                                className="site-page-header"
-                                onBack={() => {
-                                    this.props.history.push("/contributions")
-                                }}
-                                title={"Edit Contribution"}
-                                subTitle={``}
-                            />
-                        </div>
-                        <EditContribution contributionItem={contributionItem}/>
+                        <DetailsContribution contributionItem={contributionItem}/>
                     </div>
                 </main>
             </div>
@@ -51,4 +40,4 @@ class EditContributionPage extends Component {
     }
 }
 
-export default EditContributionPage;
+export default ViewContributionPage;

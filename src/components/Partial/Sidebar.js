@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import shortid from "shortid";
+import {returnLinksList} from "../../utils"
+import {authenticationService} from "../../_services"
 
 export default class Sidebar extends Component {
 
@@ -37,6 +39,13 @@ export default class Sidebar extends Component {
                 text: "Contributions"
             },
         ]
+    }
+
+    componentDidMount() {
+        const currentRole = authenticationService.currentUserValue.role.role;
+        this.setState({
+            listOfLinks: returnLinksList(currentRole)
+        })
     }
 
     renderSidebarItems = () => {

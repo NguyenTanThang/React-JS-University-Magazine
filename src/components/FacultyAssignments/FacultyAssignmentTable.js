@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
 import {populateActionButtons} from "../../utils";
 import {Space} from "antd";
+import {
+    authenticationService
+} from "../../_services";
+import {
+    Role
+} from "../../_helpers";
 
 import TableView from "../Partial/TableView";
 import DeleteFacultyAssignment from "./DeleteFacultyAssignment";
@@ -9,6 +15,23 @@ import DeleteFacultyAssignment from "./DeleteFacultyAssignment";
 class FacultyAssignmentTable extends Component {
     render() {
         const {facultyAssignments} = this.props;
+
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
+
+        const actionCol = currentRole === Role.Admin ? {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (_none, record) => {
+                return (
+                    <Space>
+                        {populateActionButtons("faculty-assignemnts", record)}
+                      <DeleteFacultyAssignment recordID={record._id}/>
+                    </Space>
+                )
+            }
+          } : {};
 
         const columns = [
             {
@@ -70,19 +93,7 @@ class FacultyAssignmentTable extends Component {
                   )
               }
             },
-            {
-                title: 'Actions',
-                dataIndex: 'actions',
-                key: 'actions',
-                render: (_none, record) => {
-                    return (
-                        <Space>
-                            {populateActionButtons("faculty-assignemnts", record)}
-                          <DeleteFacultyAssignment recordID={record._id}/>
-                        </Space>
-                    )
-                }
-              },
+            actionCol
         ];
 
         const filterredColumns = ["user.email", "user.username", "faculty.name"];

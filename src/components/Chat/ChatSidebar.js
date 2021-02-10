@@ -1,16 +1,38 @@
 import React, { Component } from 'react';
 import {Input} from "reactstrap";
-import shortid from "shortid"
+import shortid from "shortid";
+import {
+    authenticationService
+} from "../../_services";  
 
 class ChatSidebar extends Component {
 
+    state = {
+        search: ""
+    }
+
     renderSidebarChatRoom = () => {
         const {messageRooms, currentIndex, changeCurrentIndex} = this.props;
+        let actualMessageRooms = messageRooms;
+        const {search} = this.state;
+
+        actualMessageRooms = actualMessageRooms.filter(messageRoom => {
+            let isSender = false;
+            if (messageRoom.sender._id == authenticationService.currentUserValue._id){
+                isSender = true;
+            }
+
+            if (isSender) {
+                return messageRoom.receiver.username.toLowerCase().includes(search.toLowerCase());
+            } 
+
+            return messageRoom.sender.username.toLowerCase().includes(search.toLowerCase());
+        })
         
-        return messageRooms.map((messageRoom, index) => {
+        return actualMessageRooms.map((messageRoom, index) => {
             let isSender = false;
             const activeClass = currentIndex === index ? "active" : "";
-            if (messageRoom.sender._id == "600fdd5ee23ff52318455076"){
+            if (messageRoom.sender._id == authenticationService.currentUserValue._id){
                 isSender = true;
             }
 
@@ -38,13 +60,20 @@ class ChatSidebar extends Component {
         })
     }
 
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     render() {
-        const {renderSidebarChatRoom} = this;
+        const {search} = this.state;
+        const {renderSidebarChatRoom, handleChange} = this;
 
         return (
             <div className="chat_side-bar">
                 <div className="chat-side-bar__search-container">
-                    <Input id="name" name="name" placeholder="Search" />
+                    <Input id="search" name="search" placeholder="Search" value={search} onChange={handleChange}/>
                 </div>
                 <div className="chat-side-bar__list-container">
                     <ul>

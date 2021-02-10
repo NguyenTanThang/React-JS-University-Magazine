@@ -2,12 +2,23 @@ import React, { Component } from 'react';
 import {FormGroup, Form, Input} from "reactstrap";
 import {uniLogo} from "../img";
 import {authenticationService} from "../_services";
+import {message} from "antd";
 
 export default class LoginPage extends Component {
 
-    state = {
-        email: "",
-        password: ""
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: "",
+            password: ""
+        }
+
+        // redirect to home if already logged in
+        if (authenticationService.currentUserValue) { 
+            this.props.history.push('/');
+            message.error("You are already logged in");
+        }
     }
 
     handleChange = (e) => {
@@ -17,10 +28,27 @@ export default class LoginPage extends Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault();
-        const {email, password} = this.state;
-        authenticationService.login(email, password);
-        this.props.history.push("/");
+        try {
+            e.preventDefault();
+            const {email, password} = this.state;
+            authenticationService.login(email, password)
+            .then(
+                userData => {
+                    if (userData.success) {
+                        message.success("Successfully logged in");
+                        this.props.history.push("/");
+                    } else {
+                        message.error(userData.message);
+                    }
+                },
+                error => {
+                    console.log(error);
+                    message.error(error.message);
+                }
+            );
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render() {

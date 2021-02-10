@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {AddUser} from "../../components/User";
 import {Navbar} from "../../components/Partial";
+import {PageHeader} from "antd";
 
 class AddUserPage extends Component {
 
@@ -10,7 +11,16 @@ class AddUserPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>Create User</h2>
+                        <div className="page-header">
+                            <PageHeader
+                                className="site-page-header"
+                                onBack={() => {
+                                    this.props.history.push("/users")
+                                }}
+                                title={"Add User"}
+                                subTitle={``}
+                            />
+                        </div>
                         <AddUser/>
                     </div>
                 </main>

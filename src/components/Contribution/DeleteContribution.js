@@ -32,7 +32,9 @@ export default class DeleteContribution extends Component {
         return (
           <>
             <button className="btn btn-danger" onClick={this.showModal}>
-                <i className="fas fa-trash" aria-hidden="true"></i>
+              <span className="material-icons">
+                delete_forever
+              </span>
             </button>
             <Modal
               visible={visible}

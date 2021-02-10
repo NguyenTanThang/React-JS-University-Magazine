@@ -1,12 +1,52 @@
 import React, { Component } from 'react';
 import {parseDateMoment} from "../../utils";
 import {populateActionButtons} from "../../utils";
+import {
+    authenticationService
+} from "../../_services";
+import {
+    Role
+} from "../../_helpers";
 
 import TableView from "../Partial/TableView";
+import { Link } from 'react-router-dom';
 
 class UserTable extends Component {
     render() {
         const {users} = this.props;
+
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
+
+        let actionCol = currentRole === Role.Admin ? {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (_none, record) => {
+                return (
+                    <>
+                      {populateActionButtons("users", record)}
+                    </>
+                )
+            }
+          } : {};
+          actionCol = currentRole === Role.Coordinator ? {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: (_none, record) => {
+                return (
+                    <>
+                      {populateActionButtons("users", record)}
+                      <Link className="btn btn-info" to={`/chat-room/senderID/${currentUser._id}/receiverID/${record._id}`}>
+                        <span className="material-icons">
+                            chat
+                        </span>
+                      </Link>
+                    </>
+                )
+            }
+          } : {};
 
         const columns = [
             {
@@ -58,18 +98,7 @@ class UserTable extends Component {
                   )
               }
             },
-            {
-                title: 'Actions',
-                dataIndex: 'actions',
-                key: 'actions',
-                render: (_none, record) => {
-                    return (
-                        <>
-                          {populateActionButtons("users", record)}
-                        </>
-                    )
-                }
-              },
+            actionCol
         ];
 
         const filterredColumns = ["email", "username", "role.role"];

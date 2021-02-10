@@ -4,6 +4,7 @@ import {
     createTerm
 } from "../../requests";
 import {message} from "antd";
+import {withRouter} from "react-router-dom";
 
 class AddContribution extends Component {
 
@@ -25,6 +26,7 @@ class AddContribution extends Component {
             const {closureDate, finalClosureDate, name} = this.state;
             const createTermData = await createTerm({closureDate, finalClosureDate, name});
             if (createTermData.success) {
+                this.props.history.push("/terms");
                 return message.success(createTermData.message);
             } 
 
@@ -54,7 +56,7 @@ class AddContribution extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="finalClosureDate">Final Closure Date</Label>
-                            <Input className="input-control"  type="date" id="finalClosureDate" name="finalClosureDate" required onChange={handleChange} value={finalClosureDate}/>
+                            <Input className={`input-control ${!closureDate ? "disabled" : ""}`} type="date" id="finalClosureDate" name="finalClosureDate" required onChange={handleChange} value={finalClosureDate}  min={closureDate}/>
                         </FormGroup>
                         <FormGroup>
                             <button type="submit" className="btn btn-custom-primary">Submit</button>
@@ -66,4 +68,4 @@ class AddContribution extends Component {
     }
 }
 
-export default AddContribution;
+export default withRouter(AddContribution);

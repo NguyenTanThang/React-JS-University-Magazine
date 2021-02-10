@@ -1,6 +1,7 @@
 import { Modal, Button } from 'antd';
 import React, { Component } from 'react';
-import {deleteTerm} from "../../requests"
+import {deleteTerm} from "../../requests";
+import {message} from "antd";
 
 export default class DeleteTerm extends Component {
     state = {
@@ -16,11 +17,13 @@ export default class DeleteTerm extends Component {
     
       handleOk = async () => {
         this.setState({ loading: true });
-        await deleteTerm(this.props.recordID);
-        setTimeout(() => {
-          this.setState({ loading: false, visible: false });
+        const deleteTermData = await deleteTerm(this.props.recordID);
+        this.setState({ loading: false, visible: false });
+        if (deleteTermData.success) {
           window.location.reload(true);
-        }, 3000);
+        } else {
+          message.error("Something gone wrong when trying to delete the record");
+        }
       };
     
       handleCancel = () => {
@@ -32,7 +35,9 @@ export default class DeleteTerm extends Component {
         return (
           <>
             <button className="btn btn-danger" onClick={this.showModal}>
-                <i className="fas fa-trash" aria-hidden="true"></i>
+            <span className="material-icons">
+            delete_forever
+          </span>
             </button>
             <Modal
               visible={visible}

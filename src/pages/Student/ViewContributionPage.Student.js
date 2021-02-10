@@ -3,11 +3,52 @@ import {ContributionTable} from "../../components/Contribution";
 import {getAllContributions} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
+import {Navbar} from "../../components/Partial";
+import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
+
+const filterContributionByRole = (contributions) => {
+    const currentRole = authenticationService.currentUserValue.role.role;
+    const currentUser = authenticationService.currentUserValue;
+    
+    let ans = contributions;
+    
+    switch (currentRole) {
+        case Role.Student:
+            ans = contributions.filter(contribution => {
+                return contribution.contributor.email === currentUser.email
+            });
+            break;
+        case Role.Manager:
+            ans = contributions.filter(contribution => {
+                return contribution.isSelected
+            });
+            break;
+        case Role.Coordinator:
+        case Role.Guest:
+            const currentFacultyAssignment = authenticationService.currentUserValue.facultyAssignment;
+            if (!currentFacultyAssignment) {
+                message.destroy();
+                message.error("You have not been assigned to a faculty yet. Please contact your local university authority for more information.");
+                ans = []
+            } else {
+                ans = contributions.filter(contribution => {
+                    return contribution.isSelected
+                });
+            }
+            
+            break;
+        default:
+            break;
+    }
+
+    return ans;
+}
 
 class ViewContributionPage extends Component {
 
     state = {
-        contributions: []
+        contributions: [],
     }
     
     async componentDidMount() {
@@ -24,8 +65,10 @@ class ViewContributionPage extends Component {
 
     render() {
         let {contributions} = this.state;
+        let actualContributions = contributions;
 
-        let actualContributions = contributions.map(contribution => {
+        actualContributions = filterContributionByRole(actualContributions)
+        actualContributions = actualContributions.map(contribution => {
             return {
                 ...contribution,
                 key: contribution._id
@@ -34,11 +77,16 @@ class ViewContributionPage extends Component {
 
         return (
             <div>
-                <h2>View Contributions</h2>
-                <Space>
-                    <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
-                </Space>
-                <ContributionTable contributions={actualContributions}/>
+                <Navbar/>
+                <main>
+                    <div className="container">
+                        <h2>View Contributions</h2>
+                        <Space>
+                            <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
+                        </Space>
+                        <ContributionTable contributions={actualContributions}/>
+                    </div>
+                </main>
             </div>
         )
     }

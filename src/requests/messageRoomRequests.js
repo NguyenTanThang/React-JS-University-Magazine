@@ -12,3 +12,18 @@ export const getAllMessageRoomsByUserID = async (userID) => {
         return null;
     }
 }
+
+export const createMessageRoom = async (senderID, receiverID) => {
+    try {
+        const res = await axios.post(`${PROXY_URL}/message-rooms/add`, {
+            sender: senderID, receiver: receiverID
+        });
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+

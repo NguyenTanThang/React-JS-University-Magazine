@@ -4,6 +4,7 @@ import {
     getFacultyByID
 } from "../../requests";
 import {Navbar} from "../../components/Partial";
+import {PageHeader} from "antd";
 
 class EditFacultyPage extends Component {
 
@@ -32,7 +33,16 @@ class EditFacultyPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>Edit Faculty</h2>
+                        <div className="page-header">
+                            <PageHeader
+                                className="site-page-header"
+                                onBack={() => {
+                                    this.props.history.push("/faculties")
+                                }}
+                                title={"Edit Faculty"}
+                                subTitle={``}
+                            />
+                        </div>
                         <EditFaculty facultyItem={facultyItem}/>
                     </div>
                 </main>

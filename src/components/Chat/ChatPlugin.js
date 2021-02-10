@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ChatBox from 'react-chat-plugin';
 import {addMessage} from "../../requests";
-
+import {authenticationService} from "../../_services";
+ 
 export default class ChatPlugin extends Component {
 
     state = {
@@ -40,7 +41,7 @@ export default class ChatPlugin extends Component {
       handleOnSendMessage = async (message) => {
         try {
           const {messageRoom, addNewMessage} = this.props;
-          const data = await addMessage(messageRoom._id, "600fdd5ee23ff52318455076", message);
+          const data = await addMessage(messageRoom._id, authenticationService.currentUserValue._id, message);
 
           if (data.success) {
             const newMessage = data.data;
@@ -78,7 +79,7 @@ export default class ChatPlugin extends Component {
             <div className="chat-box">
                 <ChatBox
                     messages={messages}
-                    userId={"600fdd5ee23ff52318455076"}
+                    userId={authenticationService.currentUserValue._id}
                     onSendMessage={this.handleOnSendMessage}
                     width={'100%'}
                     height={'100%'}
