@@ -50,9 +50,13 @@ class ViewUserPage extends Component {
                 <main>
                     <div className="container">
                         <h2>View Users</h2>
-                        <Space>
-                            <Link to="/users/add" className="btn btn-primary">Add User</Link>
-                        </Space>
+                        {
+                            currentRole === Role.Admin ? (
+                                <Space>
+                                    <Link to="/users/add" className="btn btn-primary">Add User</Link>
+                                </Space>
+                            ) : (<></>)
+                        }
                         <UserTable users={actualUsers}/>
                     </div>
                 </main>

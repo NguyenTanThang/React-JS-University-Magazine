@@ -90,6 +90,8 @@ class AddContribution extends Component {
                 title
             } = this.state;
 
+            message.loading("Creating...")
+
             const docFileURL = await uploadDocumentFirebase(docFile);
             const imageFileURL = await uploadImageFirebase(imageFile);
 
@@ -101,6 +103,8 @@ class AddContribution extends Component {
                 title,
                 contributor: currentUser._id
             });
+
+            message.destroy();
             if (createContributionData.success) {
                 return message.success(createContributionData.message);
             } 

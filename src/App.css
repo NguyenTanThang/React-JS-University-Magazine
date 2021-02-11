@@ -105,6 +105,14 @@ main h2 {
     margin-right: 20px;
 }
 
+.main-nav-right__list li span {
+    color: #000;
+}
+
+.main-nav-right__list li a:hover span {
+    color: #80bef5;
+}
+
 .main-nav-left__user-actions {
     position: relative;
 }
@@ -212,6 +220,11 @@ main h2 {
 
 .chat-side-bar__search-container {
     padding: 10px;
+}
+
+.chat-side-bar__list-container {
+    max-height: 450px;
+    overflow-y: auto;
 }
 
 .chat__room {

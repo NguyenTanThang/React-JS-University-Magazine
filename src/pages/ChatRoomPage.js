@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    createMessageRoom
+    createMessageRoom,
+    getAllMessageRoomBySenderAndReceiver
 } from "../requests";
 import {
     message
@@ -10,6 +11,12 @@ class ChatRoomPage extends Component {
 
     async componentDidMount() {
         const {senderID, receiverID} = this.props.match.params;
+
+        const getAllMessageRoomBySenderAndReceiverData = await getAllMessageRoomBySenderAndReceiver(senderID, receiverID);
+
+        if (getAllMessageRoomBySenderAndReceiverData.data) {
+            return this.props.history.push("/chat");
+        }
 
         const createMessageRoomData =  await createMessageRoom(senderID, receiverID);
 

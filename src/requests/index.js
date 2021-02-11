@@ -7,3 +7,4 @@ export * from "./userRoleRequests";
 export * from "./firebaseRequests";
 export * from "./messageRoomRequests";
 export * from "./messageRequests";
+export * from "./commentRequests";

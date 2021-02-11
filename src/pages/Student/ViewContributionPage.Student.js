@@ -33,7 +33,7 @@ const filterContributionByRole = (contributions) => {
                 ans = []
             } else {
                 ans = contributions.filter(contribution => {
-                    return contribution.isSelected
+                    return contribution.faculty._id === currentFacultyAssignment.faculty;
                 });
             }
             
@@ -66,6 +66,8 @@ class ViewContributionPage extends Component {
     render() {
         let {contributions} = this.state;
         let actualContributions = contributions;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
 
         actualContributions = filterContributionByRole(actualContributions)
         actualContributions = actualContributions.map(contribution => {
@@ -81,9 +83,13 @@ class ViewContributionPage extends Component {
                 <main>
                     <div className="container">
                         <h2>View Contributions</h2>
-                        <Space>
-                            <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
-                        </Space>
+                        {
+                            currentRole === Role.Student ? (
+                                <Space>
+                                    <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
+                                </Space>
+                            ) : (<></>)
+                        }
                         <ContributionTable contributions={actualContributions}/>
                     </div>
                 </main>

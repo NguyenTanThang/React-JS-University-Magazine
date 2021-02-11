@@ -4,6 +4,8 @@ import {getAllFaculties} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
 import {Navbar} from "../../components/Partial";
+import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
 
 class ViewFacultyPage extends Component {
 
@@ -25,6 +27,8 @@ class ViewFacultyPage extends Component {
 
     render() {
         let {faculties} = this.state;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
 
         let actualFaculties = faculties.map(fac => {
             return {
@@ -39,9 +43,14 @@ class ViewFacultyPage extends Component {
                 <main>
                     <div className="container">
                         <h2>View Faculty</h2>
-                        <Space>
-                            <Link to="/faculties/add" className="btn btn-primary">Add Faculty</Link>
-                        </Space>
+                        {
+                            currentRole === Role.Admin ? (
+                                <Space>
+                                    <Link to="/faculties/add" className="btn btn-primary">Add Faculty</Link>
+                                </Space>
+                            ) : (<></>)
+                        }
+                        
                         <FacultyTable faculties={actualFaculties}/>
                     </div>
                 </main>

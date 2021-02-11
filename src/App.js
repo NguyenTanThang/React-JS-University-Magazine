@@ -59,7 +59,7 @@ function App() {
           <PrivateRoute path="/contributions/edit/:contributionID" component={EditContributionAdmin} roles={[Role.Student]}/>
           <PrivateRoute path="/contributions/details/:contributionID" component={ViewContributionPage} roles={[Role.Manager, Role.Admin, Role.Student, Role.Coordinator]}/>
           <PrivateRoute path="/users" exact component={ViewUserPageAdmin} roles={[Role.Admin, Role.Coordinator, Role.Manager]}/>
-          <PrivateRoute path="/users/add" component={AddUserPageAdmin} roles={[Role.Admin, Role.Coordinator]}/>
+          <PrivateRoute path="/users/add" component={AddUserPageAdmin} roles={[Role.Admin]}/>
           <PrivateRoute path="/users/edit/:userID" component={EditUserPageAdmin} roles={[Role.Admin]}/>
       </Router>
     </div>

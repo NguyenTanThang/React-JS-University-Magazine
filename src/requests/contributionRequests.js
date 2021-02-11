@@ -21,8 +21,6 @@ export const getAllContributions = async () => {
 
 export const createContribution = async (newContribution) => {
     try {
-        message.loading("Creating...", 0);
-
         const res = await axios.post(`${PROXY_URL}/contributions/add`, {
             ...newContribution
         }, {

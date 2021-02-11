@@ -4,6 +4,8 @@ import {getAllTerms} from "../../requests";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
 import {Navbar} from "../../components/Partial";
+import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
 
 class ViewTermPage extends Component {
 
@@ -25,6 +27,8 @@ class ViewTermPage extends Component {
 
     render() {
         let {terms} = this.state;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
 
         let actualTerms = terms.map(term => {
             return {
@@ -39,9 +43,13 @@ class ViewTermPage extends Component {
                 <main>
                     <div className="container">
                         <h2>View Terms</h2>
-                        <Space>
-                            <Link to="/terms/add" className="btn btn-primary">Add Term</Link>
-                        </Space>
+                        {
+                            currentRole === Role.Admin ? (
+                                <Space>
+                                    <Link to="/terms/add" className="btn btn-primary">Add Term</Link>
+                                </Space>
+                            ) : (<></>)
+                        }
                         <TermTable terms={actualTerms}/>
                     </div>
                 </main>

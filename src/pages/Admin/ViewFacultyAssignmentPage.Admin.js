@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {FacultyAssignmentTable} from "../../components/FacultyAssignments";
 import {getAllFacultyAssignments} from "../../requests";
+import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
 import {Navbar} from "../../components/Partial";
@@ -25,6 +27,8 @@ class ViewFacultyAssignmentPage extends Component {
 
     render() {
         let {facultyAssignments} = this.state;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
 
         let actualfacultyAssignments = facultyAssignments.map(facultyAssignment => {
             return {
@@ -39,9 +43,13 @@ class ViewFacultyAssignmentPage extends Component {
                 <main>
                     <div className="container">
                         <h2>View Faculty Assignment</h2>
-                        <Space>
-                            <Link to="/faculty-assignments/add" className="btn btn-primary">Add Faculty Assignment</Link>
-                        </Space>
+                        {
+                            currentRole === Role.Admin ? (
+                                <Space>
+                                    <Link to="/faculty-assignments/add" className="btn btn-primary">Add Faculty Assignment</Link>
+                                </Space>
+                            ) : (<></>)
+                        }
                         <FacultyAssignmentTable facultyAssignments={actualfacultyAssignments}/>
                     </div>
                 </main>

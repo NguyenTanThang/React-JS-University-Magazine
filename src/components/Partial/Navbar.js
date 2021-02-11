@@ -3,6 +3,7 @@ import {uniLogo} from "../../img";
 import {Sidebar} from "./";
 import {Link} from "react-router-dom";
 import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
 
 export default class Navbar extends Component {
 
@@ -26,9 +27,25 @@ export default class Navbar extends Component {
 
     render() {
         const {activeSidebar, activeUserActionDropdown, loggedIn} = this.state;
+        const currentUser = loggedIn;
         const {toggleSidebarActive, toggleUserActionDropdownActive} = this;
 
         const toggleUserActionDropdownActiveClass = activeUserActionDropdown ? "active" : "";
+        const mainNavRight = currentUser.role.role === Role.Coordinator || currentUser.role.role === Role.Student ? (
+            <ul className="main-nav-right__list">
+                <li>
+                    <Link to="/chat">
+                        <span className="material-icons">
+                        chat_bubble_outline
+                        </span>
+                    </Link>
+                </li>
+            </ul>
+        ) : (
+            <ul className="main-nav-right__list">
+                
+            </ul>
+        )
 
         if (loggedIn) {
             return (
@@ -54,15 +71,7 @@ export default class Navbar extends Component {
                                     </div>
                                 </div>
                                 <div className="navbar__main-nav__right">
-                                    <ul className="main-nav-right__list">
-                                        <li>
-                                            <Link to="/chat">
-                                                <span className="material-icons">
-                                                chat_bubble_outline
-                                                </span>
-                                            </Link>
-                                        </li>
-                                    </ul>
+                                    {mainNavRight}
     
                                     <div className="main-nav-left__user-actions">
                                         <div className=" user-actions-container" onClick={toggleUserActionDropdownActive}>
