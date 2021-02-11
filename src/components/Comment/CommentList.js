@@ -4,6 +4,7 @@ import {parseDateMoment} from "../../utils";
 import {createComment} from "../../requests";
 import AddComment from "./AddComment";
 import {authenticationService} from "../../_services";
+import {Role} from "../../_helpers";
 
 class CommentList extends Component {
 
@@ -88,10 +89,16 @@ class CommentList extends Component {
     render() {
         const {commentsData} = this.state;
         const {addComment} = this;
+        const currentUser = authenticationService.currentUserValue;
+        const currentRole = currentUser.role.role;
+
+        const addCommentComponent = currentRole === Role.Coordinator ? (
+            <AddComment addComment={addComment}/>
+        ) : (<></>);
 
         return (
             <div>
-                <AddComment addComment={addComment}/>
+                {addCommentComponent}
                 <List
                 className="comment-list"
                 header={`${commentsData.length} comments`}
