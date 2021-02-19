@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Form, Label, Input, CustomInput, FormGroup} from "reactstrap";
 import {
     getAllFaculties,
-    getAllUsers,
+    getAllUsersWithoutAssignment,
     createFacultyAssignment
 } from "../../requests";
 import {message} from "antd";
@@ -23,7 +23,7 @@ class AddFacultyAssignment extends Component {
 
     async componentDidMount() {
         try {
-            const data = await getAllUsers();
+            const data = await getAllUsersWithoutAssignment();
             const facultiesData = await getAllFaculties();
             this.setState({
                 users: data.data.filter(user => {

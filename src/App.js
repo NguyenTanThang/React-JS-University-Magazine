@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import LogoutPage from "./pages/LogoutPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 import {
   ViewUserPageAdmin,
   ViewTermPageAdmin,
@@ -44,6 +45,7 @@ function App() {
           <PrivateRoute path="/chat" roles={[Role.Coordinator, Role.Student]} exact component={ChatPage}/>
           <PrivateRoute path="/chat-room/senderID/:senderID/receiverID/:receiverID" roles={[Role.Coordinator, Role.Student]} exact component={ChatRoomPage}/>
           <FreeRoute path="/login" exact component={LoginPage}/>
+          <PrivateRoute path="/change-password" exact component={ChangePasswordPage}/>
           <Route path="/logout" exact component={LogoutPage}/>
           <PrivateRoute path="/terms" roles={[Role.Manager, Role.Admin, Role.Student, Role.Coordinator]} exact component={ViewTermPageAdmin}/>
           <PrivateRoute path="/terms/add" component={AddTermPageAdmin} roles={[Role.Admin]}/>

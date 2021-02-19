@@ -19,9 +19,46 @@ export const getAllUsers = async () => {
     }
 }
 
+export const changePassword = async (userID, oldPassword, newPassword) => {
+    try {
+        message.loading("Updating...", 0);
+
+        const res = await axios.put(`${PROXY_URL}/users/change-password/${userID}`, {oldPassword, newPassword}, {
+            headers: {
+                ...authHeader()
+            }
+        });
+        const data = res.data;
+        message.destroy();
+
+        return data;
+    } catch (error) {
+        message.destroy();
+        message.error(error.message);
+        console.log(error);
+        return null;
+    }
+}
+
+export const getAllUsersWithoutAssignment = async () => {
+    try {
+        const res = await axios.get(`${PROXY_URL}/users/without-assignment`, {
+            headers: {
+                ...authHeader()
+            }
+        });
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 export const getUserByID = async (userID) => {
     try {
-        const res = await axios.get(`${PROXY_URL}/users/${userID}`, {
+        const res = await axios.get(`${PROXY_URL}/users/userID/${userID}`, {
             headers: {
                 ...authHeader()
             }

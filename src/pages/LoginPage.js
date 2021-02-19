@@ -31,9 +31,11 @@ export default class LoginPage extends Component {
         try {
             e.preventDefault();
             const {email, password} = this.state;
+            message.loading("Logging in...", 0);
             authenticationService.login(email, password)
             .then(
                 userData => {
+                    message.destroy();
                     if (userData.success) {
                         message.success("Successfully logged in");
                         this.props.history.push("/");
