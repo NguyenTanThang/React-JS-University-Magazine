@@ -12,6 +12,16 @@ import {
 } from "../_services"
 
 export * from "./dateParser";
+export * from "./chartUtils";
+export * from "./zipFiles";
+
+export function random_rgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return {
+        bgColor: 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + 0.4 + ')',
+        borderColor: 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + 1 + ')'
+    }
+}
 
 export const returnLinksList = (role) => {
     let ans = [];

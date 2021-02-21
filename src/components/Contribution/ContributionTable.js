@@ -89,6 +89,20 @@ class ContributionTable extends Component {
               }
             },
             {
+                title: 'Created Date',
+                dataIndex: 'created_date',
+                key: 'created_date',
+                sorter: {
+                    compare: (a, b) => new Date(a.created_date) - new Date(b.created_date),
+                    multiple: 1,
+                },
+                render: (created_date, record) => {
+                    return (
+                        parseDateMoment(created_date)
+                    )
+                }
+              },
+            {
                 title: 'Actions',
                 dataIndex: 'actions',
                 key: 'actions',

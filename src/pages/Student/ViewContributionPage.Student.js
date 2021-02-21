@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ContributionTable} from "../../components/Contribution";
 import {getAllContributions} from "../../requests";
+import {zipTheFiles} from "../../utils";
 import { message, Space } from "antd";
 import {Link} from "react-router-dom";
 import {Navbar} from "../../components/Partial";
@@ -63,11 +64,44 @@ class ViewContributionPage extends Component {
         }
     }
 
-    render() {
+    handleDownloadAll = async () => {
         let {contributions} = this.state;
         let actualContributions = contributions;
+
+        actualContributions = filterContributionByRole(actualContributions)
+        actualContributions = actualContributions.map(contribution => {
+            return {
+                ...contribution,
+                key: contribution._id
+            }
+        })
+        await zipTheFiles(actualContributions);
+    }
+
+    renderUtilsBox = () => {
+        const {handleDownloadAll} = this;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
+
+        if (currentRole === Role.Student) {
+            return (
+                <Space>
+                    <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
+                </Space>
+            )
+        } else if (currentRole === Role.Admin) {
+            return (
+                <Space>
+                    <button className="btn btn-primary" onClick={handleDownloadAll}>Download All</button>
+                </Space>
+            )
+        }
+    }
+
+    render() {
+        let {contributions} = this.state;
+        const {renderUtilsBox} = this;
+        let actualContributions = contributions;
 
         actualContributions = filterContributionByRole(actualContributions)
         actualContributions = actualContributions.map(contribution => {
@@ -84,11 +118,7 @@ class ViewContributionPage extends Component {
                     <div className="container">
                         <h2>View Contributions</h2>
                         {
-                            currentRole === Role.Student ? (
-                                <Space>
-                                    <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
-                                </Space>
-                            ) : (<></>)
+                            renderUtilsBox()
                         }
                         <ContributionTable contributions={actualContributions}/>
                     </div>

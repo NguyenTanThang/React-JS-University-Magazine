@@ -16,6 +16,7 @@ import HomePage from "./pages/HomePage";
 import LogoutPage from "./pages/LogoutPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
+import ReportPage from "./pages/Guest/ReportPage";
 import {
   ViewUserPageAdmin,
   ViewTermPageAdmin,
@@ -42,6 +43,7 @@ function App() {
     <div className="App">
       <Router>
           <PrivateRoute path="/" exact component={HomePage}/>
+          <PrivateRoute path="/reports" exact component={ReportPage}/>
           <PrivateRoute path="/chat" roles={[Role.Coordinator, Role.Student]} exact component={ChatPage}/>
           <PrivateRoute path="/chat-room/senderID/:senderID/receiverID/:receiverID" roles={[Role.Coordinator, Role.Student]} exact component={ChatRoomPage}/>
           <FreeRoute path="/login" exact component={LoginPage}/>
@@ -56,10 +58,10 @@ function App() {
           <PrivateRoute path="/faculty-assignments" exact component={ViewFacultyAssignmentPageAdmin} roles={[Role.Admin]}/>
           <PrivateRoute path="/faculty-assignments/add" component={AddFacultyAssignmentPageAdmin} roles={[Role.Admin]}/>
           <PrivateRoute path="/faculty-assignments/edit/:facultyAssignmentID" component={EditFacultyAssignmentAdmin} roles={[Role.Admin]}/>
-          <PrivateRoute path="/contributions" exact component={ViewContributionPageStudent} roles={[Role.Manager, Role.Admin, Role.Student, Role.Coordinator]}/>
+          <PrivateRoute path="/contributions" exact component={ViewContributionPageStudent}/>
           <PrivateRoute path="/contributions/add" component={AddContributionAdmin} roles={[Role.Student]}/>
           <PrivateRoute path="/contributions/edit/:contributionID" component={EditContributionAdmin} roles={[Role.Student]}/>
-          <PrivateRoute path="/contributions/details/:contributionID" component={ViewContributionPage} roles={[Role.Manager, Role.Admin, Role.Student, Role.Coordinator]}/>
+          <PrivateRoute path="/contributions/details/:contributionID" component={ViewContributionPage}/>
           <PrivateRoute path="/users" exact component={ViewUserPageAdmin} roles={[Role.Admin, Role.Coordinator, Role.Manager]}/>
           <PrivateRoute path="/users/add" component={AddUserPageAdmin} roles={[Role.Admin]}/>
           <PrivateRoute path="/users/edit/:userID" component={EditUserPageAdmin} roles={[Role.Admin]}/>

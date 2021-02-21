@@ -343,6 +343,10 @@ main h2 {
     margin-bottom: 20px;
 }
 
+.chart-item {
+    margin-bottom: 30px;
+}
+
 /*Tablet*/
 @media (min-width: 768px) and (max-width: 1024px) {
     .side-bar {

@@ -19,6 +19,42 @@ export const getAllContributions = async () => {
     }
 }
 
+export const getNumberOfContributionsReport = async () => {
+    try {
+        const res = await axios.get(`${PROXY_URL}/contributions/number-of-contributions-report`);
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const getAllContributionsWithoutComment = async () => {
+    try {
+        const res = await axios.get(`${PROXY_URL}/contributions/contributions-without-comment-report`);
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const getNumberOfContributorsReport = async () => {
+    try {
+        const res = await axios.get(`${PROXY_URL}/contributions/number-of-contributors-report`);
+        const data = res.data;
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 export const createContribution = async (newContribution) => {
     try {
         const res = await axios.post(`${PROXY_URL}/contributions/add`, {

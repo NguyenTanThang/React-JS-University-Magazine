@@ -2,12 +2,51 @@ import React, { Component } from 'react';
 import {PageHeader} from "antd";
 import {withRouter} from "react-router-dom";
 import {get_url_extension, parseDateMoment} from "../../utils";
-import {FileReviewer} from "../Partial"
+import {editContribution} from "../../requests";
+import {authenticationService} from "../../_services";
+import {FileReviewer} from "../Partial";
+import {message} from "antd";
 
 class DetailsContribution extends Component {
+
+    state = {
+        isSelected: false
+    }
+
+    componentDidMount() {
+        const {contributionItem} = this.props;
+        const {isSelected} = contributionItem;
+        this.setState({
+            isSelected
+        })
+    }
+
+    nominateButtonHandle = async () => {
+        const {contributionItem} = this.props;
+        const {isSelected} = this.state;
+        const editContributionData = await editContribution(contributionItem._id, {isSelected: !isSelected});
+        if (editContributionData.success) {
+            this.setState({
+                isSelected: !isSelected
+            }, () => {
+                if (this.state.isSelected) {
+                    message.success("Un-nominating successfully")
+                } else {
+                    message.success("Nominating successfully")
+                }
+            });
+        } else {
+            message.error("Something went wrong when trying to nominate/un-nominate the contribution");
+        }
+    }
+
     render() {
         const {contributionItem} = this.props;
+        const {isSelected} = this.state;
         const {title, docFileURL, imageFileURL, contributor, created_date, last_modified_date} = contributionItem;
+        const currentUserRole = authenticationService.currentUserValue.role.role;
+        const {nominateButtonHandle} = this;
+        const nominationButton = isSelected ? <button className="btn btn-danger" onClick={nominateButtonHandle}>Un-Nominate</button> : <button className="btn btn-success" onClick={nominateButtonHandle}>Nominate</button>;
 
         return (
             <div className="details-page">
@@ -45,6 +84,13 @@ class DetailsContribution extends Component {
                             <h4>Download Doc File</h4>
                             <a href={docFileURL} target="__blank" className="btn btn-info">Download</a>
                         </div>
+                        {currentUserRole === "Coordinator" ? (
+                            <div className="info-item">
+                                <h4>Nomination</h4>
+                                {nominationButton}
+                            </div>
+                        ) : <></>}
+                        
                     </div>
                 </div>
             </div>
