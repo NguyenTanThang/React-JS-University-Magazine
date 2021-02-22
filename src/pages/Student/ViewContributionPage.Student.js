@@ -89,7 +89,7 @@ class ViewContributionPage extends Component {
                     <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
                 </Space>
             )
-        } else if (currentRole === Role.Admin) {
+        } else if (currentRole === Role.Manager) {
             return (
                 <Space>
                     <button className="btn btn-primary" onClick={handleDownloadAll}>Download All</button>
