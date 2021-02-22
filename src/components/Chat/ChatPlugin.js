@@ -49,8 +49,8 @@ export default class ChatPlugin extends Component {
             this.setState({
               messages: this.state.messages.concat({
                 author: {
-                  username: newMessage.author.username,
-                  id: newMessage.author._id,
+                  username: authenticationService.currentUserValue.username,
+                  id: authenticationService.currentUserValue._id,
                   //avatarUrl: 'https://image.flaticon.com/icons/svg/2446/2446032.svg',
                 },
                 text: message,
