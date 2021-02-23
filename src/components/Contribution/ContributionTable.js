@@ -7,6 +7,9 @@ import {
 import {
     Role
 } from "../../_helpers";
+import {
+    Link
+} from "react-router-dom"
 
 import TableView from "../Partial/TableView";
 import DeleteContribution from "./DeleteContribution";
@@ -107,11 +110,23 @@ class ContributionTable extends Component {
                 dataIndex: 'actions',
                 key: 'actions',
                 render: (_none, record) => {
-                    if (currentRole === Role.Admin || currentRole === Role.Student) {
+                    if (currentRole === Role.Admin) {
                         return (
                             <Space>
                                 {populateActionButtons("contributions", record, true)}
-                              <DeleteContribution deleteContribution={deleteContribution} recordID={record._id}/>
+                                <DeleteContribution deleteContribution={deleteContribution} recordID={record._id}/>
+                            </Space>
+                        )
+                    } else if (currentRole === Role.Student) {
+                        return (
+                            <Space>
+                                {populateActionButtons("contributions", record, true)}
+                                <Link to={`${contributions}/edit/${record._id}`} className="btn btn-warning">
+                                    <span className="material-icons">
+                                        mode_edit
+                                    </span>
+                                </Link>
+                                <DeleteContribution deleteContribution={deleteContribution} recordID={record._id}/>
                             </Space>
                         )
                     }
