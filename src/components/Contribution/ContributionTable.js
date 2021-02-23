@@ -121,7 +121,7 @@ class ContributionTable extends Component {
                         return (
                             <Space>
                                 {populateActionButtons("contributions", record, true)}
-                                <Link to={`${contributions}/edit/${record._id}`} className="btn btn-warning">
+                                <Link to={`contributions/edit/${record._id}`} className="btn btn-warning">
                                     <span className="material-icons">
                                         mode_edit
                                     </span>
