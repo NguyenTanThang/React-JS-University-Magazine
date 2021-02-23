@@ -66,7 +66,6 @@ export const createContribution = async (newContribution) => {
         });
         const data = res.data;
 
-        message.destroy();
         return data;
     } catch (error) {
         message.destroy();

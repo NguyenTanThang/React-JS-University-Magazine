@@ -64,17 +64,20 @@ class ViewContributionPage extends Component {
         }
     }
 
+    deleteContribution = (contributionID) => {
+        this.setState({
+            contributions: this.state.contributions.filter(contribution => {
+                return contribution._id !== contributionID;
+            })
+        })
+    }
+
     handleDownloadAll = async () => {
         let {contributions} = this.state;
         let actualContributions = contributions;
 
         actualContributions = filterContributionByRole(actualContributions)
-        actualContributions = actualContributions.map(contribution => {
-            return {
-                ...contribution,
-                key: contribution._id
-            }
-        })
+   
         await zipTheFiles(actualContributions);
     }
 
@@ -99,6 +102,7 @@ class ViewContributionPage extends Component {
     }
 
     render() {
+        const {deleteContribution} = this;
         let {contributions} = this.state;
         const {renderUtilsBox} = this;
         let actualContributions = contributions;
@@ -120,7 +124,7 @@ class ViewContributionPage extends Component {
                         {
                             renderUtilsBox()
                         }
-                        <ContributionTable contributions={actualContributions}/>
+                        <ContributionTable contributions={actualContributions} deleteContribution={deleteContribution}/>
                     </div>
                 </main>
             </div>

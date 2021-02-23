@@ -20,7 +20,7 @@ export default class DeleteTerm extends Component {
         const deleteTermData = await deleteTerm(this.props.recordID);
         this.setState({ loading: false, visible: false });
         if (deleteTermData.success) {
-          window.location.reload(true);
+          this.props.deleteTerm(this.props.recordID);
         } else {
           message.error("Something gone wrong when trying to delete the record");
         }

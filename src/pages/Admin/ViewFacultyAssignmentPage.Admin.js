@@ -25,7 +25,16 @@ class ViewFacultyAssignmentPage extends Component {
         }
     }
 
+    deleteFacultyAssignment = (facultyAssignmentID) => {
+        this.setState({
+            facultyAssignments: this.state.facultyAssignments.filter(facultyAssignment => {
+                return facultyAssignment._id !== facultyAssignmentID;
+            })
+        })
+    }
+
     render() {
+        const {deleteFacultyAssignment} = this;
         let {facultyAssignments} = this.state;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
@@ -50,7 +59,7 @@ class ViewFacultyAssignmentPage extends Component {
                                 </Space>
                             ) : (<></>)
                         }
-                        <FacultyAssignmentTable facultyAssignments={actualfacultyAssignments}/>
+                        <FacultyAssignmentTable facultyAssignments={actualfacultyAssignments} deleteFacultyAssignment={deleteFacultyAssignment}/>
                     </div>
                 </main>
             </div>

@@ -1,4 +1,4 @@
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import React, { Component } from 'react';
 import {deleteContribution} from "../../requests"
 
@@ -16,11 +16,13 @@ export default class DeleteContribution extends Component {
     
       handleOk = async () => {
         this.setState({ loading: true });
-        await deleteContribution(this.props.recordID);
-        setTimeout(() => {
-          this.setState({ loading: false, visible: false });
-          window.location.reload(true);
-        }, 3000);
+        const deleteContributionData = await deleteContribution(this.props.recordID);
+        this.setState({ loading: false, visible: false });
+        if (deleteContributionData.success) {
+          this.props.deleteContribution(this.props.recordID);
+        } else {
+          message.error("Something gone wrong when trying to delete the record");
+        }
       };
     
       handleCancel = () => {

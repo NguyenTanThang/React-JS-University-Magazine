@@ -1,4 +1,4 @@
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import React, { Component } from 'react';
 import {deleteFaculty} from "../../requests"
 
@@ -16,11 +16,13 @@ export default class DeleteFaculty extends Component {
     
       handleOk = async () => {
         this.setState({ loading: true });
-        await deleteFaculty(this.props.recordID);
-        setTimeout(() => {
-          this.setState({ loading: false, visible: false });
-          window.location.reload(true);
-        }, 3000);
+        const deleteFacultyData = await deleteFaculty(this.props.recordID);
+        this.setState({ loading: false, visible: false });
+        if (deleteFacultyData.success) {
+          this.props.deleteFaculty(this.props.recordID);
+        } else {
+          message.error("Something gone wrong when trying to delete the record");
+        }
       };
     
       handleCancel = () => {

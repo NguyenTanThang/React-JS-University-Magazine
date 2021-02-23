@@ -25,7 +25,16 @@ class ViewTermPage extends Component {
         }
     }
 
+    deleteTerm = (termID) => {
+        this.setState({
+            terms: this.state.terms.filter(term => {
+                return term._id !== termID;
+            })
+        })
+    }
+
     render() {
+        const {deleteTerm} = this;
         let {terms} = this.state;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
@@ -50,7 +59,7 @@ class ViewTermPage extends Component {
                                 </Space>
                             ) : (<></>)
                         }
-                        <TermTable terms={actualTerms}/>
+                        <TermTable terms={actualTerms} deleteTerm={deleteTerm}/>
                     </div>
                 </main>
             </div>

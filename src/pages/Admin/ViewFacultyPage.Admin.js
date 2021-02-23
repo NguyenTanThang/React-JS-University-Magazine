@@ -25,7 +25,16 @@ class ViewFacultyPage extends Component {
         }
     }
 
+    deleteFaculty = (facID) => {
+        this.setState({
+            faculties: this.state.faculties.filter(faculty => {
+                return faculty._id !== facID;
+            })
+        })
+    }
+
     render() {
+        const {deleteFaculty} = this;
         let {faculties} = this.state;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
@@ -51,7 +60,7 @@ class ViewFacultyPage extends Component {
                             ) : (<></>)
                         }
                         
-                        <FacultyTable faculties={actualFaculties}/>
+                        <FacultyTable deleteFaculty={deleteFaculty} faculties={actualFaculties}/>
                     </div>
                 </main>
             </div>

@@ -14,7 +14,7 @@ import DeleteContribution from "./DeleteContribution";
 class ContributionTable extends Component {
 
     render() {
-        const {contributions} = this.props;
+        const {contributions, deleteContribution} = this.props;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
 
@@ -111,7 +111,7 @@ class ContributionTable extends Component {
                         return (
                             <Space>
                                 {populateActionButtons("contributions", record, true)}
-                              <DeleteContribution recordID={record._id}/>
+                              <DeleteContribution deleteContribution={deleteContribution} recordID={record._id}/>
                             </Space>
                         )
                     }

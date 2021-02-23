@@ -15,7 +15,7 @@ import DeleteFaculty from "./DeleteFaculty";
 class FacultyTable extends Component {
 
     render() {
-        const {faculties} = this.props;
+        const {faculties, deleteFaculty} = this.props;
 
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
@@ -28,7 +28,7 @@ class FacultyTable extends Component {
                 return (
                     <Space>
                       {populateActionButtons("faculties", record)}
-                      <DeleteFaculty recordID={record._id}/>
+                      <DeleteFaculty deleteFaculty={deleteFaculty} recordID={record._id}/>
                     </Space>
                 )
             }

@@ -14,7 +14,7 @@ import DeleteTerm from "./DeleteTerm";
 
 class TermTable extends Component {
     render() {
-        const {terms} = this.props;
+        const {terms, deleteTerm} = this.props;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
 
@@ -26,7 +26,7 @@ class TermTable extends Component {
                 return (
                     <Space>
                     {populateActionButtons("terms", record)}
-                      <DeleteTerm recordID={record._id}/>
+                      <DeleteTerm deleteTerm={deleteTerm} recordID={record._id}/>
                     </Space>
                 )
             }
