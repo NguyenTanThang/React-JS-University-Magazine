@@ -68,11 +68,13 @@ export const populateActionButtons = (routeName, record, canView = false) => {
                         </span>
                     </Link>
                 ): (<></>)}
-                <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
-                    <span className="material-icons">
-                        mode_edit
-                    </span>
-                </Link>
+                {routeName === "contributions" ? (
+                    <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
+                        <span className="material-icons">
+                            mode_edit
+                        </span>
+                    </Link>
+                ) : <></>}
             </>
         )
     }
