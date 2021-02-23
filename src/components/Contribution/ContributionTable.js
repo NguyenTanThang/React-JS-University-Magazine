@@ -107,7 +107,7 @@ class ContributionTable extends Component {
                 dataIndex: 'actions',
                 key: 'actions',
                 render: (_none, record) => {
-                    if (currentRole === Role.Admin) {
+                    if (currentRole === Role.Admin || currentRole === Role.Student) {
                         return (
                             <Space>
                                 {populateActionButtons("contributions", record, true)}
