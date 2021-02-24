@@ -3,6 +3,7 @@ import {
     Navbar,
     BarChart,
     PieChart,
+    LineChart,
     TabGenerator
 } from "../../components/Partial";
 import {
@@ -90,7 +91,7 @@ class ReportPage extends Component {
                     />
                 </div>
                 <div className="chart-item">
-                    <BarChart data={filteredNumberOfContributorsReportData}
+                    <LineChart data={filteredNumberOfContributorsReportData}
                     labels={termsLabelContributor}
                     title={`Number of Contributors`}
                     />
