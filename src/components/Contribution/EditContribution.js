@@ -85,19 +85,18 @@ class EditContribution extends Component {
             message.loading("Updating...", 0);
             const {contributionItem} = this.props;
             const {
-                term,
                 docFile,
                 imageFile,
                 faculty,
                 title
             } = this.state;
             let updatedContribution = {
-                term,
                 faculty: faculty._id,
                 title,
                 docFile,
                 imageFile
             };
+            const term = contributionItem.term._id;
 
             const existedTerm = await getTermByID(term);
 
@@ -140,6 +139,7 @@ class EditContribution extends Component {
                             </Label>
                             <Input id="title" className="input-control"  name="title" required value={title} placeholder="Contribution's Title" onChange={handleChange}/>
                         </FormGroup>
+                        {/*
                         <FormGroup>
                             <Label htmlFor="term">
                                 Term
@@ -148,6 +148,7 @@ class EditContribution extends Component {
                                 {renderTermOptions()}
                             </CustomInput>
                         </FormGroup>
+                        */}
                         <FormGroup>
                             <Label htmlFor="faculty">
                                 Faculty
