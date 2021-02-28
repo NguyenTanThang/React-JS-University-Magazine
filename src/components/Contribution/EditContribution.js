@@ -5,6 +5,7 @@ import {
     editContribution,
     uploadImageFirebase,
     uploadDocumentFirebase,
+    getTermByID,
     getFacultyByID
 } from "../../requests";
 import {message} from "antd";
@@ -81,6 +82,7 @@ class EditContribution extends Component {
     handleSubmit = async (e) => {
         try {
             e.preventDefault();
+            message.loading("Updating...", 0);
             const {contributionItem} = this.props;
             const {
                 term,
@@ -96,6 +98,22 @@ class EditContribution extends Component {
                 docFile,
                 imageFile
             };
+
+            const existedTerm = await getTermByID(term);
+
+            const currentTime = new Date().getTime();
+            const closureTime = new Date(existedTerm.finalClosureDate).getTime();
+
+            // To calculate the time difference of two dates 
+            const Difference_In_Time = currentTime - closureTime; 
+                
+            // To calculate the no. of days between two dates 
+            const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+
+            if (Difference_In_Days >= 14) {
+                message.destroy();
+                return message.error("This term has reached the final closure date for any modification");
+            }
 
             const editContributionData = await editContribution(contributionItem._id, updatedContribution);
             if (editContributionData.success) {

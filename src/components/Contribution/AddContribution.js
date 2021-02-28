@@ -5,7 +5,8 @@ import {
     createContribution,
     uploadImageFirebase,
     uploadDocumentFirebase,
-    getFacultyByID
+    getFacultyByID,
+    getTermByID
 } from "../../requests";
 import {message} from "antd";
 import {
@@ -91,6 +92,22 @@ class AddContribution extends Component {
             } = this.state;
 
             message.loading("Creating...", 0);
+
+            const existedTerm = await getTermByID(term);
+
+            const currentTime = new Date().getTime();
+            const closureTime = new Date(existedTerm.closureDate).getTime();
+
+            // To calculate the time difference of two dates 
+            const Difference_In_Time = currentTime - closureTime; 
+                
+            // To calculate the no. of days between two dates 
+            const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+
+            if (Difference_In_Days >= 14) {
+                message.destroy();
+                return message.error("This term has reached the closure date for new entries");
+            }
 
             const docFileURL = await uploadDocumentFirebase(docFile);
             const imageFileURL = await uploadImageFirebase(imageFile);

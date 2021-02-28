@@ -89,7 +89,6 @@ export const getContributionByID = async (contributionID) => {
 
 export const editContribution = async (contributionID, updatedContribution) => {
     try {
-        message.loading("Updating...", 0);
 
         const {docFile, imageFile} = updatedContribution;
 
