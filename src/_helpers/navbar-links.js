@@ -1,5 +1,10 @@
 export const adminLinks = [
     {
+        link: "/reports",
+        icon: "dashboard",
+        text: "Dashboard"
+    },
+    {
         link: "/users",
         icon: "person",
         text: "Users"
@@ -81,11 +86,6 @@ export const studentLinks = [
 ]
 
 export const guestLinks = [
-    {
-        link: "/reports",
-        icon: "dashboard",
-        text: "Reports"
-    },
     {
         link: "/contributions",
         icon: "folder_open",

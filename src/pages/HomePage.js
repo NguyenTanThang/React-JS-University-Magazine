@@ -10,7 +10,7 @@ class HomePage extends Component {
 
         switch (currentRole) {
             case Role.Admin:
-                this.props.history.push('/users');
+                this.props.history.push('/reports');
                 break;
             case Role.Coordinator:
             case Role.Manager:
@@ -18,7 +18,7 @@ class HomePage extends Component {
                 this.props.history.push('/contributions');
                 break;
             case Role.Guest:
-                this.props.history.push('/reports');
+                this.props.history.push('/contributions');
                 break; 
             default:
                 //authenticationService.logout();
