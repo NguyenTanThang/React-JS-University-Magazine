@@ -274,6 +274,19 @@ main h2 {
     align-items: center;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .chat_side-bar {
+        flex: 30%;
+        max-width: 30%;
+    }
+    
+    .chat__room {
+        flex: 70%;
+        max-width: 70%;
+    }
+    
+}
+
 @media screen and (min-width: 320px) and (max-width: 767px) {
     .chat_side-bar {
         flex: 100%;
@@ -281,12 +294,26 @@ main h2 {
     }
     
     .chat-side-bar__list-container {
-        max-height: 150px;
+        max-height: 200px;
     }
     
     .chat__room {
         flex: 100%;
         max-width: 100%;
+    }
+
+    .chat-box {
+        height: 50vh !important;
+        min-height: 50vh !important;
+    }
+    
+    .react-chat-container {
+        height: 50vh !important;
+    }
+
+    .react-chat-row {
+        height: 50vh !important;
+        padding: 0 !important;
     }
 }
 
