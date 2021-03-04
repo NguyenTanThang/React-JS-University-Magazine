@@ -26,7 +26,7 @@ class FacultyAssignmentTable extends Component {
             render: (_none, record) => {
                 return (
                     <Space>
-                        {populateActionButtons("faculty-assignemnts", record)}
+                        {populateActionButtons("faculty-assignments", record)}
                       <DeleteFacultyAssignment deleteFacultyAssignment={deleteFacultyAssignment} recordID={record._id}/>
                     </Space>
                 )

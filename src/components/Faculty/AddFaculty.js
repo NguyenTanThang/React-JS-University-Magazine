@@ -4,6 +4,7 @@ import {
     createFaculty
 } from "../../requests";
 import {message} from "antd";
+import {withRouter} from "react-router-dom";
 
 class AddContribution extends Component {
 
@@ -23,7 +24,8 @@ class AddContribution extends Component {
             const {name} = this.state;
             const createFacultyData = await createFaculty({name});
             if (createFacultyData.success) {
-                return message.success(createFacultyData.message);
+                message.success(createFacultyData.message);
+                return this.props.history.push("/faculties");
             } 
 
             return message.error(createFacultyData.message);
@@ -56,4 +58,4 @@ class AddContribution extends Component {
     }
 }
 
-export default AddContribution;
+export default withRouter(AddContribution);

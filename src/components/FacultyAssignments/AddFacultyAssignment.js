@@ -7,6 +7,7 @@ import {
 } from "../../requests";
 import {message} from "antd";
 import {Role} from "../../_helpers";
+import {withRouter} from "react-router-dom";
 
 const validateRoles = (role) => {
     return role === Role.Student || role === Role.Coordinator || role === Role.Guest
@@ -50,7 +51,8 @@ class AddFacultyAssignment extends Component {
             const {user, faculty} = this.state;
             const createFacultyAssignmentData = await createFacultyAssignment({user, faculty});
             if (createFacultyAssignmentData.success) {
-                return message.success(createFacultyAssignmentData.message);
+                message.success(createFacultyAssignmentData.message);
+                return this.props.history.push("/faculty-assignments");
             } 
 
             return message.error(createFacultyAssignmentData.message);
@@ -113,4 +115,4 @@ class AddFacultyAssignment extends Component {
     }
 }
 
-export default AddFacultyAssignment;
+export default withRouter(AddFacultyAssignment);

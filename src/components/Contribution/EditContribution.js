@@ -13,7 +13,8 @@ import {
     getFileExtension,
     acceptDocExt,
     acceptImageExt
-} from "../../utils"
+} from "../../utils";
+import {withRouter} from "react-router-dom";
 
 class EditContribution extends Component {
 
@@ -53,7 +54,12 @@ class EditContribution extends Component {
             return;
         }
         const file = e.target.files[0];
+        const fileSize = e.target.files[0].size
         const fileExt = getFileExtension(file.name);
+
+        if (fileSize <= 0) {
+            return message.warning("The file you have uploaded is empty. Although the file's name is visible it will not be uploaded", 5);
+        }
 
         if (targetName == "imageFile") {
             if (acceptImageExt(fileExt)) {
@@ -69,7 +75,7 @@ class EditContribution extends Component {
                     [e.target.name]: file
                 })
             }
-            message.warning("Document can only be DOC, DOCX or PDF file.  Although the file's name is visible it will not be uploaded", 5)
+            message.warning("Document can only be DOCX or PDF file.  Although the file's name is visible it will not be uploaded", 5)
         }
     }
 
@@ -90,12 +96,24 @@ class EditContribution extends Component {
                 faculty,
                 title
             } = this.state;
+
+            if (!docFile) {
+                message.destroy();
+                return message.error("Please check the doc file input. You may entered have the wrong type of file or an empty file");
+            }
+
+            if (!imageFile) {
+                message.destroy();
+                return message.error("Please check the image file input. You may have entered the wrong type of file or an empty file");
+            }
+
             let updatedContribution = {
                 faculty: faculty._id,
                 title,
                 docFile,
                 imageFile
             };
+            
             const term = contributionItem.term._id;
 
             const existedTerm = await getTermByID(term);
@@ -116,7 +134,8 @@ class EditContribution extends Component {
 
             const editContributionData = await editContribution(contributionItem._id, updatedContribution);
             if (editContributionData.success) {
-                return message.success(editContributionData.message);
+                message.success(editContributionData.message);
+                return this.props.history.push("/contributions");
             } 
             
             return message.error(editContributionData.message);
@@ -173,4 +192,4 @@ class EditContribution extends Component {
     }
 }
 
-export default EditContribution;
+export default withRouter(EditContribution);

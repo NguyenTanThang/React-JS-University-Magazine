@@ -12,9 +12,10 @@ import {message} from "antd";
 import {
     getFileExtension,
     acceptDocExt,
-    acceptImageExt
+    acceptImageExt,
 } from "../../utils";
-import {authenticationService} from "../../_services"
+import {authenticationService} from "../../_services";
+import {withRouter} from "react-router-dom";
 
 class AddContribution extends Component {
 
@@ -53,7 +54,12 @@ class AddContribution extends Component {
             return;
         }
         const file = e.target.files[0];
+        const fileSize = e.target.files[0].size
         const fileExt = getFileExtension(file.name);
+
+        if (fileSize <= 0) {
+            return message.warning("The file you have uploaded is empty. Although the file's name is visible it will not be uploaded", 5);
+        }
 
         if (targetName == "imageFile") {
             if (acceptImageExt(fileExt)) {
@@ -61,7 +67,7 @@ class AddContribution extends Component {
                     [e.target.name]: file
                 })
             }
-            message.warning("Cover image can only be PNG, JPEG or JPG file. Although the file's name is visible it will not be uploaded", 5)
+            message.warning("Cover image can only be PNG, JPEG or JPG file. Although the file's name is visible it will not be uploaded", 5);
         }
         if (targetName == "docFile") {
             if (acceptDocExt(fileExt)) {
@@ -69,7 +75,7 @@ class AddContribution extends Component {
                     [e.target.name]: file
                 })
             }
-            message.warning("Document can only be DOC, DOCX or PDF file.  Although the file's name is visible it will not be uploaded", 5)
+            message.warning("Document can only be DOCX or PDF file.  Although the file's name is visible it will not be uploaded", 5);
         }
     }
 
@@ -92,6 +98,16 @@ class AddContribution extends Component {
             } = this.state;
 
             message.loading("Creating...", 0);
+
+            if (!docFile) {
+                message.destroy();
+                return message.error("Please check the doc file input. You may entered have the wrong type of file or an empty file");
+            }
+
+            if (!imageFile) {
+                message.destroy();
+                return message.error("Please check the image file input. You may have entered the wrong type of file or an empty file");
+            }
 
             const existedTerm = await getTermByID(term);
 
@@ -123,7 +139,8 @@ class AddContribution extends Component {
 
             if (createContributionData.success) {
                 message.destroy();
-                return message.success(createContributionData.message);
+                message.success(createContributionData.message);
+                return this.props.history.push("/contributions");
             } else {
                 message.destroy();
                 return message.error(createContributionData.message);
@@ -179,4 +196,4 @@ class AddContribution extends Component {
     }
 }
 
-export default AddContribution;
+export default withRouter(AddContribution);

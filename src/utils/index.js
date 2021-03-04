@@ -9,11 +9,45 @@ import {
 } from "../_helpers";
 import {
     authenticationService
-} from "../_services"
+} from "../_services";
+import fs from "fs";
 
 export * from "./dateParser";
 export * from "./chartUtils";
 export * from "./zipFiles";
+
+export function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                console.log(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+export const checkFileEmpty = (file) => {
+    console.log(file.size);
+    /*
+    fs.readFile(file, (err, file) => {
+        if(file.length == 0){
+            console.log("file is empty")
+            return true;
+        }else{
+            console.log("file is not empty")
+            return false;
+        }
+    })
+    */
+}
 
 export function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
@@ -68,7 +102,7 @@ export const populateActionButtons = (routeName, record, canView = false) => {
                         </span>
                     </Link>
                 ): (<></>)}
-                {routeName === "contributions" ? (
+                {routeName === "contributions" || routeName === "faculty-assignments" ? (
                     <></>
                 ) : (
                     <Link to={`${routeName}/edit/${recordID}`} className="btn btn-warning">
@@ -229,7 +263,7 @@ export const acceptImageExt = (ext) => {
 }
 
 export const acceptDocExt = (ext) => {
-    if (ext === "doc" || ext === "docx" || ext === "pdf") {
+    if (ext === "docx" || ext === "pdf") {
         return true;
     }
     return false;

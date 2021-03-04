@@ -26,8 +26,8 @@ class AddContribution extends Component {
             const {closureDate, finalClosureDate, name} = this.state;
             const createTermData = await createTerm({closureDate, finalClosureDate, name});
             if (createTermData.success) {
-                this.props.history.push("/terms");
-                return message.success(createTermData.message);
+                message.success(createTermData.message);
+                return this.props.history.push("/terms");
             } 
 
             return message.error(createTermData.message);

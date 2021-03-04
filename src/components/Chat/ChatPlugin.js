@@ -43,6 +43,9 @@ export default class ChatPlugin extends Component {
           const {messageRoom, addNewMessage} = this.props;
           const data = await addMessage(messageRoom._id, authenticationService.currentUserValue._id, message);
 
+          console.log("addMessageData");
+          console.log(data);
+
           if (data.success) {
             const newMessage = data.data;
             addNewMessage(newMessage);

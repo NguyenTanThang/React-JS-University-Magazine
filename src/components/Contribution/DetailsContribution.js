@@ -30,13 +30,13 @@ class DetailsContribution extends Component {
                 isSelected: !isSelected
             }, () => {
                 if (this.state.isSelected) {
-                    message.success("Un-nominating successfully")
-                } else {
                     message.success("Nominating successfully")
+                } else {
+                    message.success("Un-nominating successfully")
                 }
             });
         } else {
-            message.error("Something went wrong when trying to nominate/un-nominate the contribution");
+            message.error(editContributionData.message);
         }
     }
 

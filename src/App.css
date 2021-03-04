@@ -269,6 +269,27 @@ main h2 {
     padding: 0 !important;
 }
 
+.chat-page.loading {
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .chat_side-bar {
+        flex: 100%;
+        max-width: 100%;
+    }
+    
+    .chat-side-bar__list-container {
+        max-height: 150px;
+    }
+    
+    .chat__room {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
 /*Table*/
 .table-container {
     margin-top: 20px;

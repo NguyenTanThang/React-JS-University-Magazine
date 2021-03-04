@@ -57,7 +57,9 @@ function App() {
           <PrivateRoute path="/faculties/edit/:facultyID" component={EditFacultyPageAdmin} roles={[Role.Admin]}/>
           <PrivateRoute path="/faculty-assignments" exact component={ViewFacultyAssignmentPageAdmin} roles={[Role.Admin]}/>
           <PrivateRoute path="/faculty-assignments/add" component={AddFacultyAssignmentPageAdmin} roles={[Role.Admin]}/>
+          {/*
           <PrivateRoute path="/faculty-assignments/edit/:facultyAssignmentID" component={EditFacultyAssignmentAdmin} roles={[Role.Admin]}/>
+          */}
           <PrivateRoute path="/contributions" exact component={ViewContributionPageStudent}/>
           <PrivateRoute path="/contributions/add" component={AddContributionAdmin} roles={[Role.Student]}/>
           <PrivateRoute path="/contributions/edit/:contributionID" component={EditContributionAdmin} roles={[Role.Student]}/>

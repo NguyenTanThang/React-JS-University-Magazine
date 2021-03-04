@@ -5,6 +5,7 @@ import {
     getAllUserRoles,
 } from "../../requests";
 import {message} from "antd";
+import {withRouter} from "react-router-dom";
 
 class AddUser extends Component {
 
@@ -61,7 +62,8 @@ class AddUser extends Component {
             const createUserData = await createUser({username, email, password, role});
 
             if (createUserData.success) {
-                return message.success(createUserData.message);
+                message.success(createUserData.message);
+                return this.props.history.push("/users");
             } 
 
             return message.error(createUserData.message);
@@ -88,7 +90,7 @@ class AddUser extends Component {
                             <Label htmlFor="email">
                                 Email
                             </Label>
-                            <Input className="input-control" id="email" name="email" required value={email} onChange={handleChange} placeholder="Email"/>
+                            <Input type="email" className="input-control" id="email" name="email" required value={email} onChange={handleChange} placeholder="Email"/>
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="role">
@@ -97,6 +99,12 @@ class AddUser extends Component {
                             <CustomInput className="input-control" type="select" id="role" name="role" required value={role} onChange={handleChange}>
                                 {renderUserRoleOptions()}
                             </CustomInput>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="password">
+                                Password (default: 123456)
+                            </Label>
+                            <Input type="password" className="input-control" id="password" name="password" required value={password} onChange={handleChange} placeholder="Password"/>
                         </FormGroup>
                         
                         <FormGroup>
@@ -109,4 +117,4 @@ class AddUser extends Component {
     }
 }
 
-export default AddUser;
+export default withRouter(AddUser);

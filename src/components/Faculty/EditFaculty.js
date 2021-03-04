@@ -4,6 +4,7 @@ import {
     editFaculty
 } from "../../requests";
 import {message} from "antd";
+import {withRouter} from "react-router-dom";
 
 class AddContribution extends Component {
 
@@ -32,7 +33,8 @@ class AddContribution extends Component {
             const {name} = this.state;
             const editFacultyData = await editFaculty(facultyItem._id, {name});
             if (editFacultyData.success) {
-                return message.success(editFacultyData.message);
+                message.success(editFacultyData.message);
+                return this.props.history.push("/faculties");
             } 
 
             return message.error(editFacultyData.message);
@@ -65,4 +67,4 @@ class AddContribution extends Component {
     }
 }
 
-export default AddContribution;
+export default withRouter(AddContribution);

@@ -13,13 +13,17 @@ import {
 import {
     authenticationService
 } from "../_services";
+import {
+    Spin
+} from "antd";
 
 class ChatPage extends Component {
 
     state = {
         messageRooms: [],
         currentIndex: 0,
-        messagesList: []
+        messagesList: [],
+        loading: true
     }
 
     changeCurrentIndex = (currentIndex) => {
@@ -29,6 +33,8 @@ class ChatPage extends Component {
     }
 
     addNewMessage = (message) => {
+        console.log("message");
+        console.log(message);
         let {messagesList, currentIndex} = this.state;
         for (let i = 0; i < messagesList.length; i++) {
             if (i === currentIndex) {
@@ -56,7 +62,8 @@ class ChatPage extends Component {
         }
         this.setState({
             messageRooms,
-            messagesList
+            messagesList,
+            loading: false
         }, () => {
             console.log(this.state)
         })
@@ -77,9 +84,22 @@ class ChatPage extends Component {
 
     render() {
         const {changeCurrentIndex, renderChatRooms} = this;
-        const {messageRooms, currentIndex} = this.state;
+        const {messageRooms, currentIndex, loading} = this.state;
 
-        console.log(messageRooms)
+        if (loading) {
+            return (
+                <>
+                    <Navbar/>
+                    <main>
+                        <div className="chat-page loading">
+                            <Spin tip="Loading...">
+                            </Spin>
+                        </div>
+                    </main>
+                </>
+                
+            );
+        }
 
         return (
             <>

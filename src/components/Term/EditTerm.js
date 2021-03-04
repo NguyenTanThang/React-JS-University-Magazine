@@ -38,8 +38,8 @@ class AddContribution extends Component {
             const {name, closureDate, finalClosureDate} = this.state;
             const editTermData = await editTerm(termItem._id, {name, closureDate, finalClosureDate});
             if (editTermData.success) {
-                this.props.history.push("/terms");
-                return message.success(editTermData.message);
+                message.success(editTermData.message);
+                return this.props.history.push("/terms");
             } 
 
             return message.error(editTermData.message);

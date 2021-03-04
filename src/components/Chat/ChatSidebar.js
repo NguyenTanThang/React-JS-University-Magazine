@@ -4,6 +4,8 @@ import shortid from "shortid";
 import {
     authenticationService
 } from "../../_services";  
+import {PageHeader, Spin} from "antd";
+import {withRouter} from "react-router-dom";
 
 class ChatSidebar extends Component {
 
@@ -72,6 +74,16 @@ class ChatSidebar extends Component {
 
         return (
             <div className="chat_side-bar">
+                <div className="page-header">
+                    <PageHeader
+                        className="site-page-header"
+                        onBack={() => {
+                            this.props.history.push("/")
+                        }}
+                        title={"Chat"}
+                        subTitle={``}
+                    />
+                </div>
                 <div className="chat-side-bar__search-container">
                     <Input id="search" name="search" placeholder="Search" value={search} onChange={handleChange}/>
                 </div>
@@ -85,4 +97,4 @@ class ChatSidebar extends Component {
     }
 }
 
-export default ChatSidebar;
+export default withRouter(ChatSidebar);
