@@ -19,12 +19,12 @@ export const exchangeURLToFileDirectory = (url) => {
     return tempUrl;
 }
 
-export const zipTheFiles = async (contributions) => {
+export const zipTheFiles = async (contributions, zipName = "") => {
     try {
         message.loading("Fetching files...", 0);
         var zip = new JSZip();
         const currentDateString = parseDateMoment(Date.now());
-        var zipFilename = `UoG_Magazine_${currentDateString}.zip`;
+        var zipFilename = zipName ? zipName : `UoG_Magazine_${currentDateString}.zip`;
 
         for (let i = 0; i < contributions.length; i++) {
             const contribution = contributions[i];

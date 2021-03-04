@@ -26,7 +26,6 @@ const filterContributionByRole = (contributions) => {
             });
             break;
         case Role.Coordinator:
-        case Role.Guest:
             const currentFacultyAssignment = authenticationService.currentUserValue.facultyAssignment;
             if (!currentFacultyAssignment) {
                 message.destroy();
@@ -37,7 +36,21 @@ const filterContributionByRole = (contributions) => {
                     return contribution.faculty._id === currentFacultyAssignment.faculty;
                 });
             }
-            
+            break;
+        case Role.Guest:
+            const guestCurrentFacultyAssignment = authenticationService.currentUserValue.facultyAssignment;
+            if (!guestCurrentFacultyAssignment) {
+                message.destroy();
+                message.error("You have not been assigned to a faculty yet. Please contact your local university authority for more information.");
+                ans = []
+            } else {
+                ans = contributions.filter(contribution => {
+                    return contribution.faculty._id === guestCurrentFacultyAssignment.faculty;
+                });
+                ans = ans.filter(contribution => {
+                    return contribution.isSelected
+                });
+            }
             break;
         default:
             break;

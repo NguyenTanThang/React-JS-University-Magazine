@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {PageHeader} from "antd";
 import {withRouter} from "react-router-dom";
-import {get_url_extension, parseDateMoment} from "../../utils";
+import {get_url_extension, parseDateMoment, zipTheFiles} from "../../utils";
 import {editContribution} from "../../requests";
 import {authenticationService} from "../../_services";
 import {FileReviewer} from "../Partial";
@@ -40,12 +40,22 @@ class DetailsContribution extends Component {
         }
     }
 
+    handleDownload = async () => {
+        const {contributionItem} = this.props;
+        const {contributor} = contributionItem;
+        const currentDateString = parseDateMoment(Date.now());
+
+        let actualContributions = [contributionItem];
+
+        await zipTheFiles(actualContributions, `UoG_Magazine_${currentDateString}_${contributor.email}_${contributionItem.title}.zip`);
+    }
+
     render() {
         const {contributionItem} = this.props;
         const {isSelected} = this.state;
         const {title, docFileURL, imageFileURL, contributor, created_date, last_modified_date} = contributionItem;
         const currentUserRole = authenticationService.currentUserValue.role.role;
-        const {nominateButtonHandle} = this;
+        const {nominateButtonHandle, handleDownload} = this;
         const nominationButton = isSelected ? <button className="btn btn-danger" onClick={nominateButtonHandle}>Un-Nominate</button> : <button className="btn btn-success" onClick={nominateButtonHandle}>Nominate</button>;
 
         return (
@@ -82,7 +92,7 @@ class DetailsContribution extends Component {
                         </div>
                         <div className="info-item">
                             <h4>Download Doc File</h4>
-                            <a href={docFileURL} target="__blank" className="btn btn-info">Download</a>
+                            <button onClick={handleDownload} className="btn btn-info">Download</button>
                         </div>
                         {currentUserRole === "Coordinator" ? (
                             <div className="info-item">

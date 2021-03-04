@@ -34,7 +34,8 @@ export default class AddComment extends Component {
 
           setTimeout(() => {
             this.setState({
-                submitting: false
+                submitting: false,
+                content: ""
             })
           }, 2000)
       } catch (error) {
