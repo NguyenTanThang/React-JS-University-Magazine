@@ -13,6 +13,9 @@ import {
     getFileExtension,
     acceptDocExt,
     acceptImageExt,
+    calculateKB,
+    calculateMB,
+    createNotification
 } from "../../utils";
 import {authenticationService} from "../../_services";
 import {withRouter} from "react-router-dom";
@@ -54,28 +57,48 @@ class AddContribution extends Component {
             return;
         }
         const file = e.target.files[0];
-        const fileSize = e.target.files[0].size
+        const fileSize = e.target.files[0].size;
         const fileExt = getFileExtension(file.name);
 
-        if (fileSize <= 0) {
-            return message.warning("The file you have uploaded is empty. Although the file's name is visible it will not be uploaded", 5);
-        }
-
         if (targetName == "imageFile") {
+
+            if (fileSize < calculateKB(1) || fileSize > calculateMB(20)) {
+                return createNotification("warning", {
+                    message: "File Size",
+                    description: "We only accept file that are above 1KB and below 20MB. Although the file's name is visible it will not be uploaded"
+                });
+            }
+
             if (acceptImageExt(fileExt)) {
                 return this.setState({
                     [e.target.name]: file
+                })
+            } else {
+                this.setState({
+                    [e.target.name]: ""
                 })
             }
             message.warning("Cover image can only be PNG, JPEG or JPG file. Although the file's name is visible it will not be uploaded", 5);
         }
         if (targetName == "docFile") {
+
+            if (fileSize < calculateKB(20) || fileSize > calculateMB(20)) {
+                return createNotification("warning", {
+                    message: "File Size",
+                    description: "We only accept file that are above 20KB and below 20MB. Although the file's name is visible it will not be uploaded"
+                });
+            }
+
             if (acceptDocExt(fileExt)) {
                 return this.setState({
                     [e.target.name]: file
                 })
+            } else {
+                this.setState({
+                    [e.target.name]: ""
+                })
             }
-            message.warning("Document can only be DOCX or PDF file.  Although the file's name is visible it will not be uploaded", 5);
+            message.warning("Document can only be DOCX or PDF file. Although the file's name is visible it will not be uploaded", 5);
         }
     }
 
@@ -94,19 +117,34 @@ class AddContribution extends Component {
                 docFile,
                 imageFile,
                 faculty,
-                title
+                title,
+                agree
             } = this.state;
 
             message.loading("Creating...", 0);
 
+            if (!agree) {
+                message.destroy();
+                return createNotification("error", {
+                    message: "Terms & Conditions",
+                    description: "You are required to agree to the terms and conditions before any submissions"
+                });
+            }
+
             if (!docFile) {
                 message.destroy();
-                return message.error("Please check the doc file input. You may entered have the wrong type of file or an empty file");
+                return createNotification("error", {
+                    message: "Document File",
+                    description: "Please check the document file input. You may entered have the wrong type of file or file which is lower than 20KB or larger than 20MB"
+                });
             }
 
             if (!imageFile) {
                 message.destroy();
-                return message.error("Please check the image file input. You may have entered the wrong type of file or an empty file");
+                return createNotification("error", {
+                    message: "Image File",
+                    description: "Please check the image file input. You may entered have the wrong type of file or file which is lower than 1KB or larger than 20MB"
+                });
             }
 
             const existedTerm = await getTermByID(term);
@@ -179,12 +217,42 @@ class AddContribution extends Component {
                             <Input id="faculty" className="input-control"  name="faculty" required value={faculty.name} disabled/>
                         </FormGroup>
                         <FormGroup>
-                            <Label htmlFor="docFile">Doc File</Label>
+                            <Label htmlFor="docFile">Document File (docx, pdf)</Label>
                             <CustomInput className="input-control"  type="file" id="docFile" name="docFile" required onChange={handleFileChange}/>
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="imageFile">Image File</Label>
                             <CustomInput className="input-control"  type="file" id="imageFile" name="imageFile" required onChange={handleFileChange}/>
+                        </FormGroup>
+                        <FormGroup className="add-contribution-terms">
+                            <p>I confirm that what I am about to upload is my own work and that it has not, in whole or part, been presented elsewhere for assessment. In addition, I confirm that</p>
+                            <ul>
+                                <li>
+                                All material which has been copied has been clearly identified as such by being placed inside quotation marks and a full reference to the source has been provided
+                                </li>
+                                <li>
+                                Any material which has been referred to or adapted has been clearly identified and a full reference to the source has been provided
+                                </li>
+                                <li>
+                                Any work not in quotation marks is in my own words
+                                </li>
+                                <li>
+                                I have not shared my work with any other student
+                                </li>
+                                <li>
+                                I have not taken work from any other student
+                                </li>
+                                <li>
+                                I have not paid anyone to do my work or employed the services of an essay or code writing agency
+                                </li>
+                            </ul>
+                            <p>Where material has been used from other sources it has been properly acknowledged in accordance with the University's Regulations regarding Cheating and Plagiarism.</p>
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check>
+                            <Input type="checkbox" id="agree" name="agree" required onChange={handleChange}/>{' '}
+                            I agree to the terms and conditions of the Unversity
+                            </Label>
                         </FormGroup>
                         <FormGroup>
                             <button type="submit" className="btn btn-custom-primary">Submit</button>

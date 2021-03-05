@@ -10,11 +10,20 @@ import {
 import {
     authenticationService
 } from "../_services";
-import fs from "fs";
+import {notification} from "antd";
 
 export * from "./dateParser";
 export * from "./chartUtils";
 export * from "./zipFiles";
+
+export const createNotification = (type, config) => {
+    return notification[type]({
+        ...config,
+        placement: "bottomRight",
+        className: 'custom-notification-class',
+        duration: 10,
+    });
+}
 
 export function readTextFile(file)
 {
@@ -55,6 +64,14 @@ export function random_rgba() {
         bgColor: 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + 0.4 + ')',
         borderColor: 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + 1 + ')'
     }
+}
+
+export function calculateKB(index) {
+    return index * 1000;
+}
+
+export function calculateMB(index) {
+    return index * 1000 * 1000;
 }
 
 export const returnLinksList = (role) => {

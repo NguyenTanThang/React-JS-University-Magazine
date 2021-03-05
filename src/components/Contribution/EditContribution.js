@@ -3,8 +3,6 @@ import {Form, Label, Input, CustomInput, FormGroup} from "reactstrap";
 import {
     getAllTerms,
     editContribution,
-    uploadImageFirebase,
-    uploadDocumentFirebase,
     getTermByID,
     getFacultyByID
 } from "../../requests";
@@ -12,7 +10,9 @@ import {message} from "antd";
 import {
     getFileExtension,
     acceptDocExt,
-    acceptImageExt
+    acceptImageExt,
+    calculateKB,
+    calculateMB
 } from "../../utils";
 import {withRouter} from "react-router-dom";
 
@@ -57,11 +57,10 @@ class EditContribution extends Component {
         const fileSize = e.target.files[0].size
         const fileExt = getFileExtension(file.name);
 
-        if (fileSize <= 0) {
-            return message.warning("The file you have uploaded is empty. Although the file's name is visible it will not be uploaded", 5);
-        }
-
         if (targetName == "imageFile") {
+            if (fileSize < calculateKB(1) || fileSize > calculateMB(20)) {
+                return message.warning("We only accept file that are above 1KB and below 20MB. Although the file's name is visible it will not be uploaded", 5);
+            }
             if (acceptImageExt(fileExt)) {
                 return this.setState({
                     [e.target.name]: file
@@ -70,6 +69,9 @@ class EditContribution extends Component {
             message.warning("Cover image can only be PNG, JPEG or JPG file. Although the file's name is visible it will not be uploaded", 5)
         }
         if (targetName == "docFile") {
+            if (fileSize < calculateKB(20) || fileSize > calculateMB(20)) {
+                return message.warning("We only accept file that are above 20KB and below 20MB. Although the file's name is visible it will not be uploaded", 5);
+            }
             if (acceptDocExt(fileExt)) {
                 return this.setState({
                     [e.target.name]: file
@@ -97,6 +99,7 @@ class EditContribution extends Component {
                 title
             } = this.state;
 
+            /*
             if (!docFile) {
                 message.destroy();
                 return message.error("Please check the doc file input. You may entered have the wrong type of file or an empty file");
@@ -106,6 +109,7 @@ class EditContribution extends Component {
                 message.destroy();
                 return message.error("Please check the image file input. You may have entered the wrong type of file or an empty file");
             }
+            */
 
             let updatedContribution = {
                 faculty: faculty._id,
@@ -175,7 +179,7 @@ class EditContribution extends Component {
                             <Input id="faculty" className="input-control"  name="faculty" required value={faculty.name} disabled/>
                         </FormGroup>
                         <FormGroup>
-                            <Label htmlFor="docFile">Doc File</Label>
+                            <Label htmlFor="docFile">Document File (docx, pdf)</Label>
                             <CustomInput className="input-control"  type="file" id="docFile" name="docFile" onChange={handleFileChange} label="Pick a file to replace the current one or leave it empty to keep it."/>
                         </FormGroup>
                         <FormGroup>

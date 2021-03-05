@@ -91,7 +91,7 @@ class DetailsContribution extends Component {
                             </ul>
                         </div>
                         <div className="info-item">
-                            <h4>Download Doc File</h4>
+                            <h4>Download Document File</h4>
                             <button onClick={handleDownload} className="btn btn-info">Download</button>
                         </div>
                         {currentUserRole === "Coordinator" ? (
