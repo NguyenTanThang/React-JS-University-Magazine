@@ -34,7 +34,7 @@ class AddContributionPage extends Component {
                             <PageHeader
                                 className="site-page-header"
                                 onBack={() => {
-                                    this.props.history.push("/contributions")
+                                    this.props.history.push(`/terms`);
                                 }}
                                 title={"Add Contribution"}
                                 subTitle={``}
