@@ -12,6 +12,7 @@ export default class LoginPage extends Component {
 
         this.state = {
             newPassword: "",
+            confirmNewPassword: "",
             oldPassword: ""
         }
     }
@@ -26,7 +27,12 @@ export default class LoginPage extends Component {
         try {
             e.preventDefault();
             const currentUser = authenticationService.currentUserValue;
-            const {newPassword, oldPassword} = this.state;
+            const {newPassword, oldPassword, confirmNewPassword} = this.state;
+
+            if (confirmNewPassword != newPassword) {
+                return message.error("New password must be the same as confirm new password");
+            }
+
             const changePasswordData = await changePassword(currentUser._id, oldPassword, newPassword);
 
             if (changePasswordData.success) {
@@ -42,7 +48,7 @@ export default class LoginPage extends Component {
 
     render() {
         const {handleChange, handleSubmit} = this;
-        const {newPassword, oldPassword} = this.state;
+        const {newPassword, oldPassword, confirmNewPassword} = this.state;
 
         return (
             <div className="login-page">
@@ -53,6 +59,9 @@ export default class LoginPage extends Component {
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>
                             <Input type="password" id="oldPassword" name="oldPassword" placeholder="Current Password" value={oldPassword} onChange={handleChange} required/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" value={confirmNewPassword} onChange={handleChange} required/>
                         </FormGroup>
                         <FormGroup>
                             <Input type="password" id="newPassword" name="newPassword" placeholder="New Password" value={newPassword} onChange={handleChange} required/>

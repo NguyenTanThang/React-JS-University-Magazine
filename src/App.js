@@ -43,7 +43,7 @@ function App() {
     <div className="App">
       <Router>
           <PrivateRoute path="/" exact component={HomePage}/>
-          <PrivateRoute path="/reports" exact component={ReportPage} roles={[Role.Admin]}/>
+          <PrivateRoute path="/reports" exact component={ReportPage} roles={[Role.Admin, Role.Manager]}/>
           <PrivateRoute path="/chat" roles={[Role.Coordinator, Role.Student]} exact component={ChatPage}/>
           <PrivateRoute path="/chat-room/senderID/:senderID/receiverID/:receiverID" roles={[Role.Coordinator, Role.Student]} exact component={ChatRoomPage}/>
           <FreeRoute path="/login" exact component={LoginPage}/>

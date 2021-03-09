@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {parseDateMoment} from "../../utils";
-import {populateActionButtons} from "../../utils";
+import {populateActionButtons, calculateDaysDiff, parseDateMoment} from "../../utils";
 import {Space} from "antd";
 import {
     authenticationService
@@ -8,6 +7,9 @@ import {
 import {
     Role
 } from "../../_helpers";
+import {
+    Link
+} from "react-router-dom";
 
 import TableView from "../Partial/TableView";
 import DeleteTerm from "./DeleteTerm";
@@ -17,20 +19,83 @@ class TermTable extends Component {
         const {terms, deleteTerm} = this.props;
         const currentUser = authenticationService.currentUserValue;
         const currentRole = currentUser.role.role;
+        let actionCol = {};
 
-        const actionCol = currentRole === Role.Admin ? {
-            title: 'Actions',
-            dataIndex: 'actions',
-            key: 'actions',
-            render: (_none, record) => {
-                return (
-                    <Space>
-                    {populateActionButtons("terms", record)}
-                      <DeleteTerm deleteTerm={deleteTerm} recordID={record._id}/>
-                    </Space>
-                )
-            }
-        } : {};
+        switch (currentRole) {
+            case Role.Admin:
+                actionCol = {
+                    title: 'Actions',
+                    dataIndex: 'actions',
+                    key: 'actions',
+                    render: (_none, record) => {
+                        return (
+                            <Space>
+                            {populateActionButtons("terms", record)}
+                              <DeleteTerm deleteTerm={deleteTerm} recordID={record._id}/>
+                            </Space>
+                        )
+                    }
+                };
+                break;
+                case Role.Student:
+                    actionCol = {
+                        title: 'Actions',
+                        dataIndex: 'actions',
+                        key: 'actions',
+                        render: (_none, record) => {
+                            if (!calculateDaysDiff(record, 0)) {
+                                return (
+                                    <Space>
+                                      <Link className="btn btn-info" to={`/contributions?termID=${record._id}`}>
+                                        <span className="material-icons">
+                                            visibility
+                                        </span>
+                                      </Link>
+                                      <Link className="btn btn-primary" to={`/contributions/add?termID=${record._id}`}>
+                                        <span className="material-icons">
+                                            upload
+                                        </span>
+                                      </Link>
+                                    </Space>
+                                )
+                            } else {
+                                return (
+                                    <Space>
+                                      <Link className="btn btn-info" to={`/contributions?termID=${record._id}`}>
+                                        <span className="material-icons">
+                                            visibility
+                                        </span>
+                                      </Link>
+                                      <Link className="btn btn-primary disabled" to={`/contributions/add?termID=${record._id}`}>
+                                        <span className="material-icons">
+                                            upload
+                                        </span>
+                                      </Link>
+                                    </Space>
+                                )
+                            }
+                        }
+                      };
+                    break;
+            default:
+                actionCol = {
+                    title: 'Actions',
+                    dataIndex: 'actions',
+                    key: 'actions',
+                    render: (_none, record) => {
+                        return (
+                            <Space>
+                                <Link className="btn btn-info" to={`/contributions?termID=${record._id}`}>
+                                <span className="material-icons">
+                                    visibility
+                                </span>
+                                </Link>
+                            </Space>
+                        )
+                    }
+                  }
+                break;
+        }
 
         const columns = [
             {

@@ -51,6 +51,11 @@ export const coordinatorLinks = [
 
 export const managerLinks = [
     {
+        link: "/reports",
+        icon: "dashboard",
+        text: "Dashboard"
+    },
+    {
         link: "/terms",
         icon: "calendar_today",
         text: "Term"
@@ -72,16 +77,6 @@ export const studentLinks = [
         link: "/terms",
         icon: "calendar_today",
         text: "Term"
-    },
-    {
-        link: "/contributions/add",
-        icon: "upload",
-        text: "Upload"
-    },
-    {
-        link: "/contributions",
-        icon: "folder_open",
-        text: "Contributions"
     },
 ]
 

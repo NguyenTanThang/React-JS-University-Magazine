@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {Form, Label, Input, CustomInput, FormGroup} from "reactstrap";
 import {
-    getAllTerms,
     createContribution,
     uploadImageFirebase,
     uploadDocumentFirebase,
     getFacultyByID,
-    getTermByID
+    getTermByID,
 } from "../../requests";
 import {message} from "antd";
 import {
@@ -15,7 +14,8 @@ import {
     acceptImageExt,
     calculateKB,
     calculateMB,
-    createNotification
+    createNotification,
+    calculateDaysDiff
 } from "../../utils";
 import {authenticationService} from "../../_services";
 import {withRouter} from "react-router-dom";
@@ -27,27 +27,17 @@ class AddContribution extends Component {
         docFile: "",
         imageFile: "",
         faculty: "",
-        terms: [],
         title: ""
     }
 
     async componentDidMount() {
         const currentFacultyAssignment = authenticationService.currentUserValue.facultyAssignment;
-        const termData = await getAllTerms();
+        const {searchQuery} = this.props;
+        const {termID} = searchQuery
         const facData = await getFacultyByID(currentFacultyAssignment ? currentFacultyAssignment.faculty : "");
         this.setState({
-            term: termData.data[0]._id,
-            terms: termData.data,
+            term: termID,
             faculty: facData.data
-        })
-    }
-
-    renderTermOptions = () => {
-        const {terms} = this.state;
-        return terms.map(term => {
-            return (
-                <option value={term._id} key={term._id}>{term.name}</option>
-            )
         })
     }
 
@@ -149,16 +139,9 @@ class AddContribution extends Component {
 
             const existedTerm = await getTermByID(term);
 
-            const currentTime = new Date().getTime();
-            const closureTime = new Date(existedTerm.closureDate).getTime();
+            const dayDiffBool = calculateDaysDiff(existedTerm, 0);
 
-            // To calculate the time difference of two dates 
-            const Difference_In_Time = currentTime - closureTime; 
-                
-            // To calculate the no. of days between two dates 
-            const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
-
-            if (Difference_In_Days >= 14) {
+            if (dayDiffBool) {
                 message.destroy();
                 return message.error("This term has reached the closure date for new entries");
             }
@@ -178,7 +161,7 @@ class AddContribution extends Component {
             if (createContributionData.success) {
                 message.destroy();
                 message.success(createContributionData.message);
-                return this.props.history.push("/contributions");
+                return this.props.history.push(`/contributions?termID=${term}`);
             } else {
                 message.destroy();
                 return message.error(createContributionData.message);
@@ -189,8 +172,8 @@ class AddContribution extends Component {
     }
 
     render() {
-        const {renderTermOptions, handleChange, handleFileChange, handleSubmit} = this;
-        const {term, faculty, title} = this.state;
+        const {handleChange, handleFileChange, handleSubmit} = this;
+        const {faculty, title} = this.state;
 
         return (
             <div className="add-contribution-container form-container">
@@ -201,14 +184,6 @@ class AddContribution extends Component {
                                 Title
                             </Label>
                             <Input id="title" className="input-control"  name="title" required value={title} placeholder="Contribution's Title" onChange={handleChange}/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="term">
-                                Term
-                            </Label>
-                            <CustomInput className="input-control" type="select" id="term" name="term" required defaultValue={term} onChange={handleChange}>
-                                {renderTermOptions()}
-                            </CustomInput>
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="faculty">

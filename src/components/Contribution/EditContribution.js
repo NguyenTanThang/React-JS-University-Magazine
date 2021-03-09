@@ -131,7 +131,7 @@ class EditContribution extends Component {
             // To calculate the no. of days between two dates 
             const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
 
-            if (Difference_In_Days >= 14) {
+            if (Difference_In_Days >= 0) {
                 message.destroy();
                 return message.error("This term has reached the final closure date for any modification");
             }
@@ -139,7 +139,7 @@ class EditContribution extends Component {
             const editContributionData = await editContribution(contributionItem._id, updatedContribution);
             if (editContributionData.success) {
                 message.success(editContributionData.message);
-                return this.props.history.push("/contributions");
+                return this.props.history.push(`/contributions?termID=${term}`);
             } 
             
             return message.error(editContributionData.message);
@@ -149,8 +149,8 @@ class EditContribution extends Component {
     }
 
     render() {
-        const {renderTermOptions, handleChange, handleFileChange, handleSubmit} = this;
-        const {term, faculty, title} = this.state;
+        const {handleChange, handleFileChange, handleSubmit} = this;
+        const {faculty, title} = this.state;
 
         return (
             <div className="add-contribution-container form-container">

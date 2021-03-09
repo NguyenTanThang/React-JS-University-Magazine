@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import {ContributionTable} from "../../components/Contribution";
 import {getAllContributions} from "../../requests";
-import {zipTheFiles} from "../../utils";
-import { message, Space } from "antd";
-import {Link} from "react-router-dom";
+import {zipTheFiles, extractQueryString} from "../../utils";
+import { message, Space, PageHeader } from "antd";
 import {Navbar} from "../../components/Partial";
 import {authenticationService} from "../../_services";
 import {Role} from "../../_helpers";
 
-const filterContributionByRole = (contributions) => {
+const filterContributionByRole = (contributions, termID) => {
     const currentRole = authenticationService.currentUserValue.role.role;
     const currentUser = authenticationService.currentUserValue;
     
@@ -56,6 +55,12 @@ const filterContributionByRole = (contributions) => {
             break;
     }
 
+    if (termID) {
+        ans = ans.filter(contribution => {
+            return contribution.term._id === termID;
+        })
+    }
+
     return ans;
 }
 
@@ -101,9 +106,7 @@ class ViewContributionPage extends Component {
 
         if (currentRole === Role.Student) {
             return (
-                <Space>
-                    <Link to="/contributions/add" className="btn btn-primary">Upload Contribution</Link>
-                </Space>
+                <></>
             )
         } else if (currentRole === Role.Manager) {
             return (
@@ -119,8 +122,10 @@ class ViewContributionPage extends Component {
         let {contributions} = this.state;
         const {renderUtilsBox} = this;
         let actualContributions = contributions;
+        const searchQuery = extractQueryString(this.props);
+        const {termID} = searchQuery;
 
-        actualContributions = filterContributionByRole(actualContributions)
+        actualContributions = filterContributionByRole(actualContributions, termID)
         actualContributions = actualContributions.map(contribution => {
             return {
                 ...contribution,
@@ -133,7 +138,23 @@ class ViewContributionPage extends Component {
                 <Navbar/>
                 <main>
                     <div className="container">
-                        <h2>View Contributions</h2>
+                        {
+                            termID ? (
+                                <div className="page-header">
+                                    <PageHeader
+                                        className="site-page-header"
+                                        onBack={() => {
+                                            this.props.history.push("/terms")
+                                        }}
+                                        title={"View Contributions in Term"}
+                                        subTitle={``}
+                                    />
+                                </div>
+                            ) : (
+                                <h2>View Contributions</h2>
+                            )
+                        }
+                        
                         {
                             renderUtilsBox()
                         }

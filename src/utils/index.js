@@ -11,10 +11,36 @@ import {
     authenticationService
 } from "../_services";
 import {notification} from "antd";
+import queryString from "query-string";
 
 export * from "./dateParser";
 export * from "./chartUtils";
 export * from "./zipFiles";
+
+export const calculateDaysDiff = (term, dayDiff) => {
+    const existedTerm = term;
+
+    const currentTime = new Date().getTime();
+    const closureTime = new Date(existedTerm.closureDate).getTime();
+
+    // To calculate the time difference of two dates 
+    const Difference_In_Time = currentTime - closureTime; 
+        
+    // To calculate the no. of days between two dates 
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+
+    if (Difference_In_Days >= dayDiff) {
+        return true;
+    }
+
+    return false;
+}
+
+export const extractQueryString = (props) => {
+    const parsed = queryString.parse(props.location.search);
+    console.log(parsed);
+    return parsed;
+}
 
 export const createNotification = (type, config) => {
     return notification[type]({
