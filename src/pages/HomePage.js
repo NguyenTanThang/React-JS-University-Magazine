@@ -14,12 +14,12 @@ class HomePage extends Component {
                 break;
             case Role.Coordinator:
             case Role.Manager:
-            case Role.Student:
-                this.props.history.push('/contributions');
-                break;
             case Role.Guest:
                 this.props.history.push('/contributions');
-                break; 
+                break;
+            case Role.Student:
+                this.props.history.push('/terms');
+                break;
             default:
                 //authenticationService.logout();
                 break;
