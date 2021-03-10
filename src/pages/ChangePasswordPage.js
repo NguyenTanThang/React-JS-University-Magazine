@@ -61,10 +61,10 @@ export default class LoginPage extends Component {
                             <Input type="password" id="oldPassword" name="oldPassword" placeholder="Current Password" value={oldPassword} onChange={handleChange} required/>
                         </FormGroup>
                         <FormGroup>
-                            <Input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" value={confirmNewPassword} onChange={handleChange} required/>
+                            <Input type="password" id="newPassword" name="newPassword" placeholder="New Password" value={newPassword} onChange={handleChange} required/>
                         </FormGroup>
                         <FormGroup>
-                            <Input type="password" id="newPassword" name="newPassword" placeholder="New Password" value={newPassword} onChange={handleChange} required/>
+                            <Input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" value={confirmNewPassword} onChange={handleChange} required/>
                         </FormGroup>
                         <FormGroup>
                             <button type="submit" className="btn btn-custom-primary">Change Password</button>
