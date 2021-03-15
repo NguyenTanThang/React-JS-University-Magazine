@@ -18,6 +18,14 @@
       "sizes": "512x512"
     }
   ],
+  "categories": ["productivity", "work", "magazines"],
+  "screenshots" : [
+    {
+      "src": "https://i.pinimg.com/originals/42/81/a9/4281a9636ca343ef77207196b4af5be8.jpg",
+      "sizes": "1600x1200",
+      "type": "image/jpg"
+    }
+  ],
   "start_url": ".",
   "display": "fullscreen",
   "theme_color": "#000000",
