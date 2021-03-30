@@ -54,6 +54,14 @@ class ReportPage extends Component {
         })
     }
 
+    deleteContributionWithoutComment = (contributionID) => {
+        this.setState({
+            contributionsWithoutComment: this.state.contributionsWithoutComment.filter(contribution => {
+                return contribution._id !== contributionID;
+            })
+        })
+    }
+
     renderMasterTabGen = () => {
         const {
             filteredNumberOfContributionsReportData, 
@@ -63,7 +71,8 @@ class ReportPage extends Component {
             contributionsWithoutComment
         } = this.state;
         const {
-            renderTabGen
+            renderTabGen,
+            deleteContributionWithoutComment
         } = this;
 
         const contributionsWithoutCommentAfter14Days = contributionsWithoutComment.filter(contributionsWithoutCommentItem => {
@@ -103,11 +112,11 @@ class ReportPage extends Component {
             <>
                 <div className="chart-item">
                     <h4>Contributions without Comment</h4>
-                    <ContributionTable contributions={contributionsWithoutComment}/>  
+                    <ContributionTable deleteContribution={deleteContributionWithoutComment} contributions={contributionsWithoutComment}/>  
                 </div>
                 <div className="chart-item">
                     <h4>Contributions without Comment after 14 Days</h4>
-                    <ContributionTable contributions={contributionsWithoutCommentAfter14Days}/>  
+                    <ContributionTable deleteContribution={deleteContributionWithoutComment} contributions={contributionsWithoutCommentAfter14Days}/>  
                 </div>
             </>
         ]
