@@ -78,6 +78,11 @@ export const studentLinks = [
         icon: "calendar_today",
         text: "Term"
     },
+    {
+        link: "/contributions",
+        icon: "folder_open",
+        text: "Contributions"
+    },
 ]
 
 export const guestLinks = [
